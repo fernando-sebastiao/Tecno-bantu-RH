@@ -8,5 +8,9 @@ app.get("/", (req, res) => {
 
 const POST = 8009;
 app.listen(POST, () => {
-  console.log(`⚡ HTTP Server running on PORT ${POST}`);
+  try {
+    console.log(`⚡ HTTP Server running on PORT ${POST}`);
+  } catch (err) {
+    console.log(err);
+  }
 });

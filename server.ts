@@ -1,10 +1,10 @@
 import cors from "cors";
 import express from "express";
-import { routes } from "./src/routes";
+import { router } from "./src/routes";
 
 const app = express();
 
-app.use(routes);
+app.use(router);
 
 app.use(express.json());
 app.use(cors());
@@ -12,10 +12,10 @@ app.get("/", (req, res) => {
   return res.json({ message: "Server running correctly, Don't Worry!" });
 });
 
-const POST = 8009;
-app.listen(POST, () => {
+const PORT = 8009;
+app.listen(PORT, () => {
   try {
-    console.log(`⚡ HTTP Server running on PORT ${POST}`);
+    console.log(`⚡ HTTP Server running on PORT ${PORT}`);
   } catch (err) {
     console.log(err);
   }

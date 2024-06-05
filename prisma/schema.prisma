@@ -12,3 +12,10 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model nacionalidade {
+  id   String @id @default(uuid())
+  name String
+
+  @@map("nacionalidades")
+}

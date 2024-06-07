@@ -1,6 +1,8 @@
 import { Router } from "express";
-import { createNacionalidade } from "./controllers/UserController";
+import { NacionalidadeRoutes } from "./routes/userRoutes";
 
-export const router = Router();
+const routes = Router();
 
-router.post("/create-nacionalidade", createNacionalidade);
+routes.use("/nacionalidade", NacionalidadeRoutes);
+
+export { routes };

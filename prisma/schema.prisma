@@ -54,35 +54,36 @@ model Funcao {
 }
 
 model Funcionario {
-  id                          String                @id @default(uuid())
+  id                          String                    @id @default(uuid())
   nome_completo               String
   nome_pai                    String
   nome_mae                    String
   nascimento                  DateTime
-  email                       String                @unique
+  email                       String                    @unique
   genero                      Genero
   // id_pais       String 
   tipo_identificacao          Identificacao
   num_identificacao           String
   nivel_academico             NIVEL_ACADEMICO
   avatar                      String?
-  telefone1                   String                @unique
-  telefone2                   String?               @unique
+  telefone1                   String                    @unique
+  telefone2                   String?                   @unique
   linkedin                    String?
   whatsApp                    String?
   instagram                   String?
   bairro                      String
   rua                         String
-  Funcao                      Funcao?               @relation(fields: [id_funcao], references: [id])
-  id_funcao                   String?               @map("funcaoId")
-  Categoria                   CategoriaRH?          @relation(fields: [id_categoria], references: [id])
-  id_categoria                String?               @map("categoriaId")
+  Funcao                      Funcao?                   @relation(fields: [id_funcao], references: [id])
+  id_funcao                   String?                   @map("funcaoId")
+  Categoria                   CategoriaRH?              @relation(fields: [id_categoria], references: [id])
+  id_categoria                String?                   @map("categoriaId")
   iban                        String?
   dadosprofissionais          DadosProfissionais[]
   formacoes                   Formacoes[]
   esperiencialaboral          ExperiencialLaboral[]
-  departamentosComoChefe      Departamento[]        @relation("FuncionarioChefe")
-  departamentosComoSupervisor Departamento[]        @relation("FuncionarioSupervisor")
+  departamentosComoChefe      Departamento[]            @relation("FuncionarioChefe")
+  departamentosComoSupervisor Departamento[]            @relation("FuncionarioSupervisor")
+  funcionariodepartamento     FuncionarioDepartamento[]
 
   @@map("funcionario")
 }
@@ -149,6 +150,17 @@ model Departamento {
   Id_funcionario_supervisor String?
   funcionario_chefe         Funcionario? @relation("FuncionarioChefe", fields: [Id_funcionario_chefe], references: [id])
   funcionario_supervisor    Funcionario? @relation("FuncionarioSupervisor", fields: [Id_funcionario_supervisor], references: [id])
+
+  funcionariodepartamento FuncionarioDepartamento[]
+}
+
+model FuncionarioDepartamento {
+  id String @id @default(uuid())
+
+  Departamento    Departamento? @relation(fields: [Id_departamento], references: [id])
+  Id_departamento String?       @map("departamentoId")
+  Funcionario     Funcionario?  @relation(fields: [Id_funcionario], references: [id])
+  Id_funcionario  String?       @map("funcionarioId")
 }
 
 enum Contrato {

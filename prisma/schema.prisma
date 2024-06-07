@@ -13,9 +13,171 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model nacionalidade {
-  id   String @id @default(uuid())
-  name String
+model Carreira {
+  id            String        @id @default(uuid())
+  nome_carreira String        @unique
+  regime        Regime
+  subcarreira   SubCarreira[]
+  cateroria     CategoriaRH[]
 
-  @@map("nacionalidades")
+  @@map("carreira")
+}
+
+model SubCarreira {
+  id               String        @id @default(uuid())
+  nome_SubCarreira String
+  Id_carreira      String?       @map("carreiraId")
+  Carreira         Carreira?     @relation(fields: [Id_carreira], references: [id])
+  categoria        CategoriaRH[]
+
+  @@map("subcarreira")
+}
+
+model CategoriaRH {
+  id             String        @id @default(uuid())
+  nome_categoria String
+  Carreira       Carreira?     @relation(fields: [Id_carreira], references: [id])
+  Id_carreira    String?       @map("carreiraId")
+  SubCarreira    SubCarreira?  @relation(fields: [Id_subCarreira], references: [id])
+  Id_subCarreira String?       @map("subCarreiraId")
+  funcionario    Funcionario[]
+
+  @@map("categoria")
+}
+
+model Funcao {
+  id          String        @id @default(uuid())
+  nome_funcao String
+  funcionario Funcionario[]
+
+  @@map("funcao")
+}
+
+model Funcionario {
+  id                          String                @id @default(uuid())
+  nome_completo               String
+  nome_pai                    String
+  nome_mae                    String
+  nascimento                  DateTime
+  email                       String                @unique
+  genero                      Genero
+  // id_pais       String 
+  tipo_identificacao          Identificacao
+  num_identificacao           String
+  nivel_academico             NIVEL_ACADEMICO
+  avatar                      String?
+  telefone1                   String                @unique
+  telefone2                   String?               @unique
+  linkedin                    String?
+  whatsApp                    String?
+  instagram                   String?
+  bairro                      String
+  rua                         String
+  Funcao                      Funcao?               @relation(fields: [id_funcao], references: [id])
+  id_funcao                   String?               @map("funcaoId")
+  Categoria                   CategoriaRH?          @relation(fields: [id_categoria], references: [id])
+  id_categoria                String?               @map("categoriaId")
+  iban                        String?
+  dadosprofissionais          DadosProfissionais[]
+  formacoes                   Formacoes[]
+  esperiencialaboral          ExperiencialLaboral[]
+  departamentosComoChefe      Departamento[]        @relation("FuncionarioChefe")
+  departamentosComoSupervisor Departamento[]        @relation("FuncionarioSupervisor")
+
+  @@map("funcionario")
+}
+
+model DadosProfissionais {
+  id              String   @id @default(uuid())
+  data_admissao   DateTime
+  numero_despacho String?
+  data_despacho   DateTime
+  contrato        Contrato
+
+  Funcionario    Funcionario? @relation(fields: [Id_funcionario], references: [id])
+  Id_funcionario String?      @map("funcionarioId")
+
+  @@map("DadosProfissionais")
+}
+
+model Formacoes {
+  id             String       @id @default(uuid())
+  ano_inicio     DateTime
+  ano_termino    DateTime
+  formacao       String
+  pais           String
+  instituicao    String
+  Funcionario    Funcionario? @relation(fields: [Id_funcionario], references: [id])
+  Id_funcionario String?      @map("funcionarioId")
+
+  @@map("formacoes")
+}
+
+model Publicacoes {
+  id       String   @id @default(uuid())
+  titulo   String
+  entidade String
+  ano      DateTime
+  tipo     Tipo
+
+  @@map("publicacoes")
+}
+
+//All status
+
+enum Tipo {
+  Livro
+  Cientifico
+  Outro
+}
+
+model ExperiencialLaboral {
+  id             String       @id @default(uuid())
+  ano_inicio     DateTime
+  ano_termino    DateTime
+  funcao         String
+  instituicao    String
+  pais           String?
+  Funcionario    Funcionario? @relation(fields: [Id_funcionario], references: [id])
+  Id_funcionario String?      @map("funcionarioId")
+}
+
+model Departamento {
+  id                        String       @id @default(uuid())
+  nome_departamento         String
+  Id_funcionario_chefe      String?
+  Id_funcionario_supervisor String?
+  funcionario_chefe         Funcionario? @relation("FuncionarioChefe", fields: [Id_funcionario_chefe], references: [id])
+  funcionario_supervisor    Funcionario? @relation("FuncionarioSupervisor", fields: [Id_funcionario_supervisor], references: [id])
+}
+
+enum Contrato {
+  CTD
+  CAP
+}
+
+enum NIVEL_ACADEMICO {
+  Base
+  Medio
+  Universitario
+  Licenciado
+  Mestrado
+  Doctoramento
+}
+
+enum Identificacao {
+  BI
+  Passaporte
+  Residente
+  Outro
+}
+
+enum Regime {
+  geral
+  especial
+}
+
+enum Genero {
+  masculino
+  femenino
 }

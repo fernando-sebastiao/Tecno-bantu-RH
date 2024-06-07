@@ -84,6 +84,8 @@ model Funcionario {
   departamentosComoChefe      Departamento[]            @relation("FuncionarioChefe")
   departamentosComoSupervisor Departamento[]            @relation("FuncionarioSupervisor")
   funcionariodepartamento     FuncionarioDepartamento[]
+  Banco                       Banco?                    @relation(fields: [Id_banco], references: [id])
+  Id_banco                    String?                   @map("bancoId")
 
   @@map("funcionario")
 }
@@ -161,6 +163,16 @@ model FuncionarioDepartamento {
   Id_departamento String?       @map("departamentoId")
   Funcionario     Funcionario?  @relation(fields: [Id_funcionario], references: [id])
   Id_funcionario  String?       @map("funcionarioId")
+}
+
+model Banco {
+  id          String        @id @default(uuid())
+  nome_banco  String
+  codigo      String
+  sigla       String
+  funcionario Funcionario[]
+
+  @@map("banco")
 }
 
 enum Contrato {

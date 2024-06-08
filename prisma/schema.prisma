@@ -37,6 +37,7 @@ model CategoriaRH {
   id             String        @id @default(uuid())
   nome_categoria String        @map("nome")
   Carreira       Carreira?     @relation(fields: [Id_carreira], references: [id])
+  salario_base   Float[]
   Id_carreira    String?       @map("carreiraId")
   SubCarreira    SubCarreira?  @relation(fields: [Id_subCarreira], references: [id])
   Id_subCarreira String?       @map("subCarreiraId")

@@ -54,6 +54,16 @@ model Funcao {
   @@map("funcao")
 }
 
+model Banco {
+  id          Int           @id @default(autoincrement())
+  nome_banco  String        @map("nome")
+  codigo      String
+  sigla       String
+  funcionario Funcionario[]
+
+  @@map("banco")
+}
+
 model Funcionario {
   id                          Int                       @id @default(autoincrement())
   nome_completo               String                    @map("nomeCompleto")
@@ -128,14 +138,6 @@ model Publicacoes {
   @@map("publicacoes")
 }
 
-//All status
-
-enum Tipo {
-  livro
-  cientifico
-  outro
-}
-
 model ExperiencialLaboral {
   id             Int          @id @default(autoincrement())
   ano_inicio     DateTime
@@ -166,14 +168,12 @@ model FuncionarioDepartamento {
   Id_funcionario  Int?          @map("funcionarioId")
 }
 
-model Banco {
-  id          Int           @id @default(autoincrement())
-  nome_banco  String        @map("nome")
-  codigo      String
-  sigla       String
-  funcionario Funcionario[]
+//All Enum
 
-  @@map("banco")
+enum Tipo {
+  livro
+  cientifico
+  outro
 }
 
 enum Contrato {

@@ -15,7 +15,7 @@ datasource db {
 
 model Carreira {
   id            String        @id @default(uuid())
-  nome_carreira String        @unique
+  nome_carreira String        @unique @map("nome")
   regime        Regime
   subcarreira   SubCarreira[]
   cateroria     CategoriaRH[]
@@ -25,7 +25,7 @@ model Carreira {
 
 model SubCarreira {
   id               String        @id @default(uuid())
-  nome_SubCarreira String
+  nome_SubCarreira String        @map("nome")
   Id_carreira      String?       @map("carreiraId")
   Carreira         Carreira?     @relation(fields: [Id_carreira], references: [id])
   categoria        CategoriaRH[]
@@ -35,7 +35,7 @@ model SubCarreira {
 
 model CategoriaRH {
   id             String        @id @default(uuid())
-  nome_categoria String
+  nome_categoria String        @map("nome")
   Carreira       Carreira?     @relation(fields: [Id_carreira], references: [id])
   Id_carreira    String?       @map("carreiraId")
   SubCarreira    SubCarreira?  @relation(fields: [Id_subCarreira], references: [id])
@@ -47,7 +47,7 @@ model CategoriaRH {
 
 model Funcao {
   id          String        @id @default(uuid())
-  nome_funcao String
+  nome_funcao String        @map("nome")
   funcionario Funcionario[]
 
   @@map("funcao")
@@ -55,9 +55,9 @@ model Funcao {
 
 model Funcionario {
   id                          String                    @id @default(uuid())
-  nome_completo               String
-  nome_pai                    String
-  nome_mae                    String
+  nome_completo               String                    @map("nomeCompleto")
+  nome_pai                    String                    @map("nomePai")
+  nome_mae                    String                    @map("nomeMae")
   nascimento                  DateTime
   email                       String                    @unique
   genero                      Genero
@@ -78,6 +78,7 @@ model Funcionario {
   Categoria                   CategoriaRH?              @relation(fields: [id_categoria], references: [id])
   id_categoria                String?                   @map("categoriaId")
   iban                        String?
+  Id_banco                    String?                   @map("bancoId")
   dadosprofissionais          DadosProfissionais[]
   formacoes                   Formacoes[]
   esperiencialaboral          ExperiencialLaboral[]
@@ -85,7 +86,6 @@ model Funcionario {
   departamentosComoSupervisor Departamento[]            @relation("FuncionarioSupervisor")
   funcionariodepartamento     FuncionarioDepartamento[]
   Banco                       Banco?                    @relation(fields: [Id_banco], references: [id])
-  Id_banco                    String?                   @map("bancoId")
 
   @@map("funcionario")
 }
@@ -129,9 +129,9 @@ model Publicacoes {
 //All status
 
 enum Tipo {
-  Livro
-  Cientifico
-  Outro
+  livro
+  cientifico
+  outro
 }
 
 model ExperiencialLaboral {
@@ -157,8 +157,7 @@ model Departamento {
 }
 
 model FuncionarioDepartamento {
-  id String @id @default(uuid())
-
+  id              String        @id @default(uuid())
   Departamento    Departamento? @relation(fields: [Id_departamento], references: [id])
   Id_departamento String?       @map("departamentoId")
   Funcionario     Funcionario?  @relation(fields: [Id_funcionario], references: [id])
@@ -167,7 +166,7 @@ model FuncionarioDepartamento {
 
 model Banco {
   id          String        @id @default(uuid())
-  nome_banco  String
+  nome_banco  String        @map("nome")
   codigo      String
   sigla       String
   funcionario Funcionario[]

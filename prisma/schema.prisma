@@ -62,7 +62,7 @@ model Funcionario {
   nascimento                  DateTime
   email                       String                    @unique
   genero                      Genero
-  // id_pais       String 
+  pais                        String
   tipo_identificacao          Identificacao
   num_identificacao           String
   nivel_academico             NIVEL_ACADEMICO
@@ -78,7 +78,8 @@ model Funcionario {
   id_funcao                   String?                   @map("funcaoId")
   Categoria                   CategoriaRH?              @relation(fields: [id_categoria], references: [id])
   id_categoria                String?                   @map("categoriaId")
-  iban                        String?
+  num_conta                   String?                   @unique
+  iban                        String?                   @unique
   Id_banco                    String?                   @map("bancoId")
   dadosprofissionais          DadosProfissionais[]
   formacoes                   Formacoes[]

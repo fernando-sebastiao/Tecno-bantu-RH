@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Carreira {
-  id            String        @id @default(uuid())
+  id            Int           @id @default(autoincrement())
   nome_carreira String        @unique @map("nome")
   regime        Regime
   subcarreira   SubCarreira[]
@@ -24,9 +24,9 @@ model Carreira {
 }
 
 model SubCarreira {
-  id               String        @id @default(uuid())
+  id               Int           @id @default(autoincrement())
   nome_SubCarreira String        @map("nome")
-  Id_carreira      String?       @map("carreiraId")
+  Id_carreira      Int?          @map("carreiraId")
   Carreira         Carreira?     @relation(fields: [Id_carreira], references: [id])
   categoria        CategoriaRH[]
 
@@ -34,20 +34,20 @@ model SubCarreira {
 }
 
 model CategoriaRH {
-  id             String        @id @default(uuid())
+  id             Int           @id @default(autoincrement())
   nome_categoria String        @map("nome")
   Carreira       Carreira?     @relation(fields: [Id_carreira], references: [id])
   salario_base   Float[]
-  Id_carreira    String?       @map("carreiraId")
+  Id_carreira    Int?          @map("carreiraId")
   SubCarreira    SubCarreira?  @relation(fields: [Id_subCarreira], references: [id])
-  Id_subCarreira String?       @map("subCarreiraId")
+  Id_subCarreira Int?          @map("subCarreiraId")
   funcionario    Funcionario[]
 
   @@map("categoria")
 }
 
 model Funcao {
-  id          String        @id @default(uuid())
+  id          Int           @id @default(autoincrement())
   nome_funcao String        @map("nome")
   funcionario Funcionario[]
 
@@ -55,7 +55,7 @@ model Funcao {
 }
 
 model Funcionario {
-  id                          String                    @id @default(uuid())
+  id                          Int                       @id @default(autoincrement())
   nome_completo               String                    @map("nomeCompleto")
   nome_pai                    String                    @map("nomePai")
   nome_mae                    String                    @map("nomeMae")
@@ -75,12 +75,12 @@ model Funcionario {
   bairro                      String
   rua                         String
   Funcao                      Funcao?                   @relation(fields: [id_funcao], references: [id])
-  id_funcao                   String?                   @map("funcaoId")
+  id_funcao                   Int?                      @map("funcaoId")
   Categoria                   CategoriaRH?              @relation(fields: [id_categoria], references: [id])
-  id_categoria                String?                   @map("categoriaId")
-  num_conta                   String?                   @unique
+  id_categoria                Int?                      @map("categoriaId")
+  num_conta                   String?                   @unique @map("numeroConta")
   iban                        String?                   @unique
-  Id_banco                    String?                   @map("bancoId")
+  Id_banco                    Int?                      @map("bancoId")
   dadosprofissionais          DadosProfissionais[]
   formacoes                   Formacoes[]
   esperiencialaboral          ExperiencialLaboral[]
@@ -93,33 +93,33 @@ model Funcionario {
 }
 
 model DadosProfissionais {
-  id              String   @id @default(uuid())
+  id              Int      @id @default(autoincrement())
   data_admissao   DateTime
-  numero_despacho String?
+  numero_despacho String?  @map("numeroDespacho")
   data_despacho   DateTime
   contrato        Contrato
 
   Funcionario    Funcionario? @relation(fields: [Id_funcionario], references: [id])
-  Id_funcionario String?      @map("funcionarioId")
+  Id_funcionario Int?         @map("funcionarioId")
 
   @@map("DadosProfissionais")
 }
 
 model Formacoes {
-  id             String       @id @default(uuid())
+  id             Int          @id @default(autoincrement())
   ano_inicio     DateTime
   ano_termino    DateTime
   formacao       String
   pais           String
   instituicao    String
   Funcionario    Funcionario? @relation(fields: [Id_funcionario], references: [id])
-  Id_funcionario String?      @map("funcionarioId")
+  Id_funcionario Int?         @map("funcionarioId")
 
   @@map("formacoes")
 }
 
 model Publicacoes {
-  id       String   @id @default(uuid())
+  id       Int      @id @default(autoincrement())
   titulo   String
   entidade String
   ano      DateTime
@@ -137,21 +137,21 @@ enum Tipo {
 }
 
 model ExperiencialLaboral {
-  id             String       @id @default(uuid())
+  id             Int          @id @default(autoincrement())
   ano_inicio     DateTime
   ano_termino    DateTime
   funcao         String
   instituicao    String
   pais           String?
   Funcionario    Funcionario? @relation(fields: [Id_funcionario], references: [id])
-  Id_funcionario String?      @map("funcionarioId")
+  Id_funcionario Int?         @map("funcionarioId")
 }
 
 model Departamento {
-  id                        String       @id @default(uuid())
-  nome_departamento         String
-  Id_funcionario_chefe      String?
-  Id_funcionario_supervisor String?
+  id                        Int          @id @default(autoincrement())
+  nome_departamento         String       @map("nome")
+  Id_funcionario_chefe      Int?
+  Id_funcionario_supervisor Int?
   funcionario_chefe         Funcionario? @relation("FuncionarioChefe", fields: [Id_funcionario_chefe], references: [id])
   funcionario_supervisor    Funcionario? @relation("FuncionarioSupervisor", fields: [Id_funcionario_supervisor], references: [id])
 
@@ -159,15 +159,15 @@ model Departamento {
 }
 
 model FuncionarioDepartamento {
-  id              String        @id @default(uuid())
+  id              Int           @id @default(autoincrement())
   Departamento    Departamento? @relation(fields: [Id_departamento], references: [id])
-  Id_departamento String?       @map("departamentoId")
+  Id_departamento Int?          @map("departamentoId")
   Funcionario     Funcionario?  @relation(fields: [Id_funcionario], references: [id])
-  Id_funcionario  String?       @map("funcionarioId")
+  Id_funcionario  Int?          @map("funcionarioId")
 }
 
 model Banco {
-  id          String        @id @default(uuid())
+  id          Int           @id @default(autoincrement())
   nome_banco  String        @map("nome")
   codigo      String
   sigla       String

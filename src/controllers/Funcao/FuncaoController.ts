@@ -88,7 +88,7 @@ export const deleteFuncao = async (
       ]);
     }
 
-    // Fazer o delete da funcao
+    // Fazer o delete da Função
     const dados = await prisma.funcao.delete({
       where: {
         id: Number(id),
@@ -105,7 +105,7 @@ export const deleteFuncao = async (
   }
 };
 
-//actualizar funcão
+//actualizar função
 export const updateFuncao = async (
   req: Request,
   res: Response,

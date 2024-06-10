@@ -45,7 +45,9 @@ export const getbyIdFuncao = async (req: Request, res: Response) => {
       },
     });
     if (!ifFuncaoexists) {
-      throw new CustomError("Function not found", 401);
+      throw new CustomError("Usuário não encontrado", 404, [
+        "O número de identificação fornecido não existe!",
+      ]);
     }
     return res.status(200).json(ifFuncaoexists);
   } catch (err) {

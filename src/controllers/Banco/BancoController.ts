@@ -142,3 +142,36 @@ export const updateBanco = async (
     next(err);
   }
 };
+//Usuario Deletar Função
+export const deleteBanco = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+
+  try {
+    const banco = await prisma.banco.findFirst({ where: { id: Number(id) } });
+
+    if (!banco) {
+      throw new CustomError("Usuário não encontrado", 400, [
+        "O número de identificação fornecido não existe",
+      ]);
+    }
+
+    // Fazer o delete do Banco
+    const dados = await prisma.banco.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    return res.json({
+      Error: false,
+      message: "Banco Deletado com sucesso",
+      dados,
+    });
+  } catch (err) {
+    next(err); // Passa o erro para o middleware de tratamento de erros
+  }
+};

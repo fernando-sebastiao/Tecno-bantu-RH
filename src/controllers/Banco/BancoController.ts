@@ -47,7 +47,7 @@ export const getAllBanco = async (req: Request, res: Response) => {
   return res.status(200).json(data);
 };
 
-//Usuário Consultar funcao
+//Usuário Consultar banco
 export const getbyIdBanco = async (
   req: Request,
   res: Response,
@@ -69,5 +69,76 @@ export const getbyIdBanco = async (
     return res.status(200).json(banco);
   } catch (err) {
     next(err); // Passa o erro para o middleware de tratamento de erros;
+  }
+};
+
+//Actualizar o Banco
+
+export const updateBanco = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+  const { nome_banco, codigo, sigla } = req.body;
+
+  try {
+    // Verificar se o banco existe
+    const verificar = await prisma.banco.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!verificar) {
+      throw new CustomError("Bank Not Found", 400, [
+        "O número de identificação fornecido não existe",
+      ]);
+    }
+
+    // Validar os dados
+    const verificarDado = BancoSchema.safeParse(req.body);
+
+    if (!verificarDado.success) {
+      // Filtrar especificamente o erro de nome_banco.nonempty
+      const nomeBancoError = verificarDado.error.errors.find(
+        (error) =>
+          error.path.includes("nome_banco") &&
+          error.message === "O nome do banco não pode ser vazio"
+      );
+
+      if (nomeBancoError) {
+        throw new CustomError("Erro de Validação", 400, [
+          nomeBancoError.message,
+        ]);
+      } else {
+        // Se não for o erro de nome_banco.nonempty, lançar todos os erros de validação
+        throw new CustomError(
+          "Erro de Validação",
+          400,
+          verificarDado.error.errors.map((error) => error.message)
+        );
+      }
+    }
+
+    // Atualizar os dados
+    const dados = await prisma.banco.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        nome_banco: verificarDado.data.nome_banco,
+        codigo: verificarDado.data.codigo,
+        sigla: verificarDado.data.sigla,
+      },
+    });
+
+    return res.json({
+      Error: false,
+      message: "Banco atualizado com sucesso",
+      dados,
+    });
+  } catch (err) {
+    next(err);
   }
 };

@@ -71,7 +71,7 @@ export const getbyIdFuncao = async (
     next(err); // Passa o erro para o middleware de tratamento de erros;
   }
 };
-//Usuariio Deletar Função
+//Usuario Deletar Função
 export const deleteFuncao = async (
   req: Request,
   res: Response,
@@ -105,6 +105,7 @@ export const deleteFuncao = async (
   }
 };
 
+//actualizar funcao
 export const updateFuncao = async (
   req: Request,
   res: Response,

@@ -19,7 +19,8 @@ model Carreira {
   regime        Regime
   subcarreira   SubCarreira[]
   cateroria     CategoriaRH[]
-
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
   @@map("carreira")
 }
 
@@ -29,7 +30,8 @@ model SubCarreira {
   Id_carreira      Int?          @map("carreiraId")
   Carreira         Carreira?     @relation(fields: [Id_carreira], references: [id])
   categoria        CategoriaRH[]
-
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
   @@map("subcarreira")
 }
 
@@ -42,7 +44,8 @@ model CategoriaRH {
   SubCarreira    SubCarreira?  @relation(fields: [Id_subCarreira], references: [id])
   Id_subCarreira Int?          @map("subCarreiraId")
   funcionario    Funcionario[]
-
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
   @@map("categoria")
 }
 
@@ -50,7 +53,8 @@ model Funcao {
   id          Int           @id @default(autoincrement())
   nome_funcao String        @map("nome")
   funcionario Funcionario[]
-
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
   @@map("funcao")
 }
 
@@ -60,7 +64,8 @@ model Banco {
   codigo      String
   sigla       String
   funcionario Funcionario[]
-
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
   @@map("banco")
 }
 
@@ -91,6 +96,8 @@ model Funcionario {
   num_conta                   String?                   @unique @map("numeroConta")
   iban                        String?                   @unique
   Id_banco                    Int?                      @map("bancoId")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
   dadosprofissionais          DadosProfissionais[]
   formacoes                   Formacoes[]
   esperiencialaboral          ExperiencialLaboral[]
@@ -111,7 +118,8 @@ model DadosProfissionais {
 
   Funcionario    Funcionario? @relation(fields: [Id_funcionario], references: [id])
   Id_funcionario Int?         @map("funcionarioId")
-
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
   @@map("DadosProfissionais")
 }
 
@@ -124,7 +132,8 @@ model Formacoes {
   instituicao    String
   Funcionario    Funcionario? @relation(fields: [Id_funcionario], references: [id])
   Id_funcionario Int?         @map("funcionarioId")
-
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
   @@map("formacoes")
 }
 
@@ -134,7 +143,8 @@ model Publicacoes {
   entidade String
   ano      DateTime
   tipo     Tipo
-
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
   @@map("publicacoes")
 }
 
@@ -145,6 +155,8 @@ model ExperiencialLaboral {
   funcao         String
   instituicao    String
   pais           String?
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
   Funcionario    Funcionario? @relation(fields: [Id_funcionario], references: [id])
   Id_funcionario Int?         @map("funcionarioId")
 }
@@ -154,6 +166,8 @@ model Departamento {
   nome_departamento         String       @map("nome")
   Id_funcionario_chefe      Int?
   Id_funcionario_supervisor Int?
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
   funcionario_chefe         Funcionario? @relation("FuncionarioChefe", fields: [Id_funcionario_chefe], references: [id])
   funcionario_supervisor    Funcionario? @relation("FuncionarioSupervisor", fields: [Id_funcionario_supervisor], references: [id])
 
@@ -166,6 +180,8 @@ model FuncionarioDepartamento {
   Id_departamento Int?          @map("departamentoId")
   Funcionario     Funcionario?  @relation(fields: [Id_funcionario], references: [id])
   Id_funcionario  Int?          @map("funcionarioId")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
 }
 
 //All Enum

@@ -21,6 +21,8 @@ CREATE TABLE "carreira" (
     "id" SERIAL NOT NULL,
     "nome" TEXT NOT NULL,
     "regime" "Regime" NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "carreira_pkey" PRIMARY KEY ("id")
 );
@@ -30,6 +32,8 @@ CREATE TABLE "subcarreira" (
     "id" SERIAL NOT NULL,
     "nome" TEXT NOT NULL,
     "carreiraId" INTEGER,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "subcarreira_pkey" PRIMARY KEY ("id")
 );
@@ -41,6 +45,8 @@ CREATE TABLE "categoria" (
     "salario_base" DOUBLE PRECISION[],
     "carreiraId" INTEGER,
     "subCarreiraId" INTEGER,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "categoria_pkey" PRIMARY KEY ("id")
 );
@@ -49,6 +55,8 @@ CREATE TABLE "categoria" (
 CREATE TABLE "funcao" (
     "id" SERIAL NOT NULL,
     "nome" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "funcao_pkey" PRIMARY KEY ("id")
 );
@@ -59,6 +67,8 @@ CREATE TABLE "banco" (
     "nome" TEXT NOT NULL,
     "codigo" TEXT NOT NULL,
     "sigla" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "banco_pkey" PRIMARY KEY ("id")
 );
@@ -89,6 +99,8 @@ CREATE TABLE "funcionario" (
     "numeroConta" TEXT,
     "iban" TEXT,
     "bancoId" INTEGER,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "funcionario_pkey" PRIMARY KEY ("id")
 );
@@ -101,6 +113,8 @@ CREATE TABLE "DadosProfissionais" (
     "data_despacho" TIMESTAMP(3) NOT NULL,
     "contrato" "Contrato" NOT NULL,
     "funcionarioId" INTEGER,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "DadosProfissionais_pkey" PRIMARY KEY ("id")
 );
@@ -114,6 +128,8 @@ CREATE TABLE "formacoes" (
     "pais" TEXT NOT NULL,
     "instituicao" TEXT NOT NULL,
     "funcionarioId" INTEGER,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "formacoes_pkey" PRIMARY KEY ("id")
 );
@@ -125,6 +141,8 @@ CREATE TABLE "publicacoes" (
     "entidade" TEXT NOT NULL,
     "ano" TIMESTAMP(3) NOT NULL,
     "tipo" "Tipo" NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "publicacoes_pkey" PRIMARY KEY ("id")
 );
@@ -137,6 +155,8 @@ CREATE TABLE "ExperiencialLaboral" (
     "funcao" TEXT NOT NULL,
     "instituicao" TEXT NOT NULL,
     "pais" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
     "funcionarioId" INTEGER,
 
     CONSTRAINT "ExperiencialLaboral_pkey" PRIMARY KEY ("id")
@@ -148,6 +168,8 @@ CREATE TABLE "Departamento" (
     "nome" TEXT NOT NULL,
     "Id_funcionario_chefe" INTEGER,
     "Id_funcionario_supervisor" INTEGER,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Departamento_pkey" PRIMARY KEY ("id")
 );
@@ -157,6 +179,8 @@ CREATE TABLE "FuncionarioDepartamento" (
     "id" SERIAL NOT NULL,
     "departamentoId" INTEGER,
     "funcionarioId" INTEGER,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "FuncionarioDepartamento_pkey" PRIMARY KEY ("id")
 );

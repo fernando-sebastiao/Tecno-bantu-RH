@@ -1,17 +1,17 @@
 import { Router } from "express";
 import {
-  createFuncao,
-  deleteFuncao,
-  getAllFuncao,
-  getbyIdFuncao,
-  updateFuncao,
+  createFuncaoController,
+  deleteFuncaoController,
+  getbyIdFuncaoController,
+  updateFuncaoController,
 } from "../controllers/Funcao/FuncaoController";
+import { getAllFuncao } from "../models/Funcao/listFuncao";
 
 const FuncaoRoutes = Router();
 
-FuncaoRoutes.post("/create-funcao", createFuncao);
+FuncaoRoutes.post("/create-funcao", createFuncaoController);
 FuncaoRoutes.get("/getallFuncao", getAllFuncao);
-FuncaoRoutes.get("/find/:id", getbyIdFuncao);
-FuncaoRoutes.delete("/delete-funcao/:id", deleteFuncao);
-FuncaoRoutes.put("/update-funcao/:id", updateFuncao);
+FuncaoRoutes.get("/find/:id", getbyIdFuncaoController);
+FuncaoRoutes.delete("/delete-funcao/:id", deleteFuncaoController);
+FuncaoRoutes.put("/update-funcao/:id", updateFuncaoController);
 export { FuncaoRoutes };

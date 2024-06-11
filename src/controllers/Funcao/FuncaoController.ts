@@ -1,10 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
+import { CreateFuncao } from "../../models/Funcao/createFuncao";
+import { destroyFuncao } from "../../models/Funcao/destroy";
+import { ListarById } from "../../models/Funcao/getAllbyId";
 import { funcaoSchema } from "../../utils/validateFuncao";
 
 //Usuário criar funcao
-export const createFuncao = async (
+export const createFuncaoController = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -29,9 +32,7 @@ export const createFuncao = async (
       ]);
     }
     //criando uma nova Funcao
-    const dados = await prisma.funcao.create({
-      data: parseFuncao.data,
-    });
+    const dados = await CreateFuncao(parseFuncao.data);
 
     return res.status(201).json({ massage: "Created Function", dados });
   } catch (err) {
@@ -39,16 +40,8 @@ export const createFuncao = async (
   }
 };
 
-//Usuário lista funcao
-
-export const getAllFuncao = async (req: Request, res: Response) => {
-  const data = await prisma.funcao.findMany();
-
-  return res.status(200).json(data);
-};
-
 //Usuário Consultar funcao
-export const getbyIdFuncao = async (
+export const getbyIdFuncaoController = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -66,13 +59,14 @@ export const getbyIdFuncao = async (
         "O número de identificação fornecido não existe",
       ]);
     }
-    return res.status(200).json(funcao);
+    const dados = await ListarById(Number(id));
+    return res.status(200).json(dados);
   } catch (err) {
     next(err); // Passa o erro para o middleware de tratamento de erros;
   }
 };
 //Usuario Deletar Função //
-export const deleteFuncao = async (
+export const deleteFuncaoController = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -89,11 +83,7 @@ export const deleteFuncao = async (
     }
 
     // Fazer o delete da Função
-    const dados = await prisma.funcao.delete({
-      where: {
-        id: Number(id),
-      },
-    });
+    const dados = await destroyFuncao(Number(id));
 
     return res.json({
       Error: false,
@@ -106,7 +96,7 @@ export const deleteFuncao = async (
 };
 
 //actualizar função
-export const updateFuncao = async (
+export const updateFuncaoController = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -162,7 +152,6 @@ export const updateFuncao = async (
         nome_funcao: verificarDado.data.nome_funcao,
       },
     });
-
     return res.json({
       Error: false,
       message: "Função atualizada com sucesso",

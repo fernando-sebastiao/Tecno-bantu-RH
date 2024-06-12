@@ -28,7 +28,7 @@ export const createCarreiraController = async (
       where: { nome_carreira: parseCarreira.data.nome_carreira },
     });
     if (verificar) {
-      throw new CustomError("Bank already exists", 400, [
+      throw new CustomError("This Carreira already exists", 400, [
         "Esta Carreira já existe",
       ]);
     }

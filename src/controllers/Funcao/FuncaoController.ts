@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
+import { UpdateFuncao } from "../../models/Funcao/UpdateFuncao";
 import { CreateFuncao } from "../../models/Funcao/createFuncao";
 import { destroyFuncao } from "../../models/Funcao/destroy";
 import { ListarById } from "../../models/Funcao/getAllbyId";
@@ -96,6 +97,7 @@ export const deleteFuncaoController = async (
 };
 
 //actualizar função
+
 export const updateFuncaoController = async (
   req: Request,
   res: Response,
@@ -144,19 +146,12 @@ export const updateFuncaoController = async (
     }
 
     // Atualizar os dados
-    const dados = await prisma.funcao.update({
-      where: {
-        id: Number(id),
-      },
-      data: {
-        nome_funcao: verificarDado.data.nome_funcao,
-      },
+    const dados = await UpdateFuncao({
+      id: Number(id),
+      nome_funcao: verificarDado.data.nome_funcao,
     });
-    return res.json({
-      Error: false,
-      message: "Função atualizada com sucesso",
-      dados,
-    });
+
+    res.json(dados);
   } catch (err) {
     next(err);
   }

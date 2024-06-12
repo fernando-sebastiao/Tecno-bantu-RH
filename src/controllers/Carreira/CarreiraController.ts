@@ -33,7 +33,7 @@ export const createCarreiraController = async (
       ]);
     }
     const dados = await CreateCarreira(parseCarreira.data);
-    return res.status(201).json({ massage: "Created Bank", dados });
+    return res.status(201).json({ massage: "Created Carreira", dados });
   } catch (err) {
     next(err);
   }
@@ -74,12 +74,12 @@ export const deleteCarreiraController = async (
   const { id } = req.params;
 
   try {
-    const carreira = await prisma.funcao.findFirst({
+    const carreira = await prisma.carreira.findFirst({
       where: { id: Number(id) },
     });
 
     if (!carreira) {
-      throw new CustomError("Usuário não encontrado", 400, [
+      throw new CustomError("Carreira não encontrada", 400, [
         "O número de identificação fornecido não existe",
       ]);
     }

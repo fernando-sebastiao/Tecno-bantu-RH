@@ -56,8 +56,8 @@ export const getbyIdBanco = async (
       },
     });
     if (!funcao) {
-      throw new CustomError("Usuário não encontrado", 400, [
-        "O número de identificação fornecido não existe",
+      throw new CustomError("Banco não encontrado", 400, [
+        "O Banco não encontrado",
       ]);
     }
     const banco = await ListarBancoById(Number(id));
@@ -99,7 +99,7 @@ export const updateBancoController = async (
       const nomeBancoError = verificarDado.error.errors.find(
         (error) =>
           error.path.includes("nome_banco") &&
-          error.message === "O nome do banco não pode ser vazio"
+          error.message === "O nome não pode ser enviado vázio!"
       );
 
       if (nomeBancoError) {

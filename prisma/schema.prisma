@@ -19,8 +19,9 @@ model Carreira {
   regime        Regime
   subcarreira   SubCarreira[]
   cateroria     CategoriaRH[]
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+
   @@map("carreira")
 }
 
@@ -28,24 +29,26 @@ model SubCarreira {
   id               Int           @id @default(autoincrement())
   nome_SubCarreira String        @map("nome")
   Id_carreira      Int?          @map("carreiraId")
-  Carreira         Carreira?     @relation(fields: [Id_carreira], references: [id])
+  Carreira         Carreira?     @relation(fields: [Id_carreira], references: [id], onDelete: Cascade)
   categoria        CategoriaRH[]
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  createdAt        DateTime      @default(now()) @map("created_at")
+  updatedAt        DateTime      @updatedAt @map("updated_at")
+
   @@map("subcarreira")
 }
 
 model CategoriaRH {
   id             Int           @id @default(autoincrement())
   nome_categoria String        @map("nome")
-  Carreira       Carreira?     @relation(fields: [Id_carreira], references: [id])
+  Carreira       Carreira?     @relation(fields: [Id_carreira], references: [id], onDelete: Cascade)
   salario_base   Float[]
   Id_carreira    Int?          @map("carreiraId")
-  SubCarreira    SubCarreira?  @relation(fields: [Id_subCarreira], references: [id])
+  SubCarreira    SubCarreira?  @relation(fields: [Id_subCarreira], references: [id], onDelete: Cascade)
   Id_subCarreira Int?          @map("subCarreiraId")
   funcionario    Funcionario[]
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+
   @@map("categoria")
 }
 
@@ -53,8 +56,9 @@ model Funcao {
   id          Int           @id @default(autoincrement())
   nome_funcao String        @map("nome")
   funcionario Funcionario[]
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
+
   @@map("funcao")
 }
 
@@ -64,8 +68,9 @@ model Banco {
   codigo      String
   sigla       String
   funcionario Funcionario[]
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
+
   @@map("banco")
 }
 
@@ -89,22 +94,22 @@ model Funcionario {
   instagram                   String?
   bairro                      String
   rua                         String
-  Funcao                      Funcao?                   @relation(fields: [id_funcao], references: [id])
+  Funcao                      Funcao?                   @relation(fields: [id_funcao], references: [id], onDelete: Cascade)
   id_funcao                   Int?                      @map("funcaoId")
-  Categoria                   CategoriaRH?              @relation(fields: [id_categoria], references: [id])
+  Categoria                   CategoriaRH?              @relation(fields: [id_categoria], references: [id], onDelete: Cascade)
   id_categoria                Int?                      @map("categoriaId")
   num_conta                   String?                   @unique @map("numeroConta")
   iban                        String?                   @unique
   Id_banco                    Int?                      @map("bancoId")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  createdAt                   DateTime                  @default(now()) @map("created_at")
+  updatedAt                   DateTime                  @updatedAt @map("updated_at")
   dadosprofissionais          DadosProfissionais[]
   formacoes                   Formacoes[]
   esperiencialaboral          ExperiencialLaboral[]
   departamentosComoChefe      Departamento[]            @relation("FuncionarioChefe")
   departamentosComoSupervisor Departamento[]            @relation("FuncionarioSupervisor")
   funcionariodepartamento     FuncionarioDepartamento[]
-  Banco                       Banco?                    @relation(fields: [Id_banco], references: [id])
+  Banco                       Banco?                    @relation(fields: [Id_banco], references: [id], onDelete: Cascade)
 
   @@map("funcionario")
 }
@@ -116,10 +121,11 @@ model DadosProfissionais {
   data_despacho   DateTime
   contrato        Contrato
 
-  Funcionario    Funcionario? @relation(fields: [Id_funcionario], references: [id])
+  Funcionario    Funcionario? @relation(fields: [Id_funcionario], references: [id], onDelete: Cascade)
   Id_funcionario Int?         @map("funcionarioId")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  createdAt      DateTime     @default(now()) @map("created_at")
+  updatedAt      DateTime     @updatedAt @map("updated_at")
+
   @@map("DadosProfissionais")
 }
 
@@ -130,21 +136,23 @@ model Formacoes {
   formacao       String
   pais           String
   instituicao    String
-  Funcionario    Funcionario? @relation(fields: [Id_funcionario], references: [id])
+  Funcionario    Funcionario? @relation(fields: [Id_funcionario], references: [id], onDelete: Cascade)
   Id_funcionario Int?         @map("funcionarioId")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  createdAt      DateTime     @default(now()) @map("created_at")
+  updatedAt      DateTime     @updatedAt @map("updated_at")
+
   @@map("formacoes")
 }
 
 model Publicacoes {
-  id       Int      @id @default(autoincrement())
-  titulo   String
-  entidade String
-  ano      DateTime
-  tipo     Tipo
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  id        Int      @id @default(autoincrement())
+  titulo    String
+  entidade  String
+  ano       DateTime
+  tipo      Tipo
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
   @@map("publicacoes")
 }
 
@@ -155,9 +163,9 @@ model ExperiencialLaboral {
   funcao         String
   instituicao    String
   pais           String?
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
-  Funcionario    Funcionario? @relation(fields: [Id_funcionario], references: [id])
+  createdAt      DateTime     @default(now()) @map("created_at")
+  updatedAt      DateTime     @updatedAt @map("updated_at")
+  Funcionario    Funcionario? @relation(fields: [Id_funcionario], references: [id], onDelete: Cascade)
   Id_funcionario Int?         @map("funcionarioId")
 }
 
@@ -166,22 +174,22 @@ model Departamento {
   nome_departamento         String       @map("nome")
   Id_funcionario_chefe      Int?
   Id_funcionario_supervisor Int?
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
-  funcionario_chefe         Funcionario? @relation("FuncionarioChefe", fields: [Id_funcionario_chefe], references: [id])
-  funcionario_supervisor    Funcionario? @relation("FuncionarioSupervisor", fields: [Id_funcionario_supervisor], references: [id])
+  createdAt                 DateTime     @default(now()) @map("created_at")
+  updatedAt                 DateTime     @updatedAt @map("updated_at")
+  funcionario_chefe         Funcionario? @relation("FuncionarioChefe", fields: [Id_funcionario_chefe], references: [id], onDelete: Cascade)
+  funcionario_supervisor    Funcionario? @relation("FuncionarioSupervisor", fields: [Id_funcionario_supervisor], references: [id], onDelete: Cascade)
 
   funcionariodepartamento FuncionarioDepartamento[]
 }
 
 model FuncionarioDepartamento {
   id              Int           @id @default(autoincrement())
-  Departamento    Departamento? @relation(fields: [Id_departamento], references: [id])
+  Departamento    Departamento? @relation(fields: [Id_departamento], references: [id], onDelete: Cascade)
   Id_departamento Int?          @map("departamentoId")
-  Funcionario     Funcionario?  @relation(fields: [Id_funcionario], references: [id])
+  Funcionario     Funcionario?  @relation(fields: [Id_funcionario], references: [id], onDelete: Cascade)
   Id_funcionario  Int?          @map("funcionarioId")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
 }
 
 //All Enum

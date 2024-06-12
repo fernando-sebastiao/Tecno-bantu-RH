@@ -1,6 +1,7 @@
 import { prisma } from "../../database/db";
 import { CarreiraDTO } from "../../utils/DTOs/CreateCarreiraDTO";
 
+//Actualizar Carreira
 export const updateCarreira = async ({
   id,
   nome_carreira,

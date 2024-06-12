@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
+import { updateBanco } from "../../models/Banco/UpdateBanco";
+import { CreateBanco } from "../../models/Banco/createBanco";
+import { destroyBanco } from "../../models/Banco/destroy";
+import { ListarBancoById } from "../../models/Banco/getAllbyId";
 import { BancoSchema } from "../../utils/validateBanco";
 
 //Usuário criar funcao
@@ -29,22 +33,12 @@ export const createBanco = async (
       ]);
     }
     //criando um novo Banco
-    const dados = await prisma.banco.create({
-      data: parseBanco.data,
-    });
+    const dados = await CreateBanco(parseBanco.data);
 
     return res.status(201).json({ massage: "Created Bank", dados });
   } catch (err) {
     next(err); // Passa o erro para o middleware de tratamento de erros
   }
-};
-
-//Usuário listar Banco
-
-export const getAllBanco = async (req: Request, res: Response) => {
-  const data = await prisma.banco.findMany();
-
-  return res.status(200).json(data);
 };
 
 //Usuário Consultar banco
@@ -56,16 +50,17 @@ export const getbyIdBanco = async (
   try {
     const { id } = req.params;
     //verificar se existe
-    const banco = await prisma.banco.findUnique({
+    const funcao = await prisma.banco.findUnique({
       where: {
         id: Number(id),
       },
     });
-    if (!banco) {
-      throw new CustomError("Banco não encontrado", 400, [
+    if (!funcao) {
+      throw new CustomError("Usuário não encontrado", 400, [
         "O número de identificação fornecido não existe",
       ]);
     }
+    const banco = await ListarBancoById(Number(id));
     return res.status(200).json(banco);
   } catch (err) {
     next(err); // Passa o erro para o middleware de tratamento de erros;
@@ -74,7 +69,7 @@ export const getbyIdBanco = async (
 
 //Actualizar o Banco
 
-export const updateBanco = async (
+export const updateBancoController = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -122,15 +117,11 @@ export const updateBanco = async (
     }
 
     // Atualizar os dados
-    const dados = await prisma.banco.update({
-      where: {
-        id: Number(id),
-      },
-      data: {
-        nome_banco: verificarDado.data.nome_banco,
-        codigo: verificarDado.data.codigo,
-        sigla: verificarDado.data.sigla,
-      },
+    const dados = await updateBanco({
+      id: Number(id),
+      nome_banco: verificarDado.data.nome_banco,
+      codigo: verificarDado.data.codigo,
+      sigla: verificarDado.data.sigla,
     });
 
     return res.json({
@@ -160,11 +151,7 @@ export const deleteBanco = async (
     }
 
     // Fazer o delete do Banco
-    const dados = await prisma.banco.delete({
-      where: {
-        id: Number(id),
-      },
-    });
+    const dados = await destroyBanco(Number(id));
 
     return res.json({
       Error: false,

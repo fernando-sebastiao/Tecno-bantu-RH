@@ -1,8 +1,8 @@
 import { prisma } from "../../database/db";
 
-export const ListarFuncaoById = async (id: number) => {
+export const ListarBancoById = async (id: number) => {
   //consultar o Id
-  const dados = await prisma.funcao.findMany({
+  const dados = await prisma.banco.findMany({
     where: { id },
   });
   return dados;

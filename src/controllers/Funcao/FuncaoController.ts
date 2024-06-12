@@ -4,7 +4,7 @@ import { CustomError } from "../../errors/CustomError";
 import { UpdateFuncao } from "../../models/Funcao/UpdateFuncao";
 import { CreateFuncao } from "../../models/Funcao/createFuncao";
 import { destroyFuncao } from "../../models/Funcao/destroy";
-import { ListarById } from "../../models/Funcao/getAllbyId";
+import { ListarFuncaoById } from "../../models/Funcao/getAllbyId";
 import { funcaoSchema } from "../../utils/validateFuncao";
 
 //Usuário criar funcao
@@ -60,7 +60,7 @@ export const getbyIdFuncaoController = async (
         "O número de identificação fornecido não existe",
       ]);
     }
-    const dados = await ListarById(Number(id));
+    const dados = await ListarFuncaoById(Number(id));
     return res.status(200).json(dados);
   } catch (err) {
     next(err); // Passa o erro para o middleware de tratamento de erros;

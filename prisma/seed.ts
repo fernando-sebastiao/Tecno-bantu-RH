@@ -31,6 +31,34 @@ async function main() {
       },
     });
   }
+  const subCarreiras = [
+    { id: 1, id_carreira: 4, nome_sub_carreira: "TELEFONISTA" },
+    { id: 2, id_carreira: 4, nome_sub_carreira: "AUXILIAR ADMINISTRATIVO" },
+    { id: 3, id_carreira: 4, nome_sub_carreira: "AUXILIAR DE LIMPEZA" },
+    { id: 4, id_carreira: 5, nome_sub_carreira: "TESOUREIRO" },
+    { id: 5, id_carreira: 5, nome_sub_carreira: "MOTORISTA DE PESADOS" },
+    { id: 6, id_carreira: 5, nome_sub_carreira: "MOTORISTA DE LIGEIROS" },
+    { id: 7, id_carreira: 6, nome_sub_carreira: "QUALIFICADO" },
+    { id: 8, id_carreira: 6, nome_sub_carreira: "NÃO QUALIFICADO" },
+  ];
+
+  for (const subCarreira of subCarreiras) {
+    await prisma.subCarreira.upsert({
+      where: { id: subCarreira.id },
+      update: {
+        nome_SubCarreira: subCarreira.nome_sub_carreira,
+        Id_carreira: subCarreira.id_carreira,
+        updatedAt: new Date(),
+      },
+      create: {
+        id: subCarreira.id,
+        nome_SubCarreira: subCarreira.nome_sub_carreira,
+        Id_carreira: subCarreira.id_carreira,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    });
+  }
 }
 
 main()

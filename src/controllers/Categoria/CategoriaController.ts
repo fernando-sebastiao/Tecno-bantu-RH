@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
 import { CreateCategoria } from "../../models/Categoria/createCategoria";
+import { destroyCategoria } from "../../models/Categoria/destroy";
 import { ListarCategoriaById } from "../../models/Categoria/getallbyId";
 import { updateCategoria } from "../../models/Categoria/updateCategoria";
 import { categoriaSchema } from "../../utils/validateCategoria";
@@ -152,5 +153,37 @@ export const updateCategoriaController = async (
     });
   } catch (err) {
     next(err);
+  }
+};
+
+//Usuario Deletar Categoria
+export const deleteCategoria = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+
+  try {
+    const categoria = await prisma.categoriaRH.findFirst({
+      where: { id: Number(id) },
+    });
+
+    if (!categoria) {
+      throw new CustomError("Categoria não encontrada", 400, [
+        "O número de identificação fornecido não existe",
+      ]);
+    }
+
+    // Fazer o delete da Categoria
+    const dados = await destroyCategoria(Number(id));
+
+    return res.json({
+      Error: false,
+      message: "Categoria Deletada com sucesso",
+      dados,
+    });
+  } catch (err) {
+    next(err); // Passa o erro para o middleware de tratamento de erros
   }
 };

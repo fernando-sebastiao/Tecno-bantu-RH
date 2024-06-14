@@ -11,6 +11,6 @@ export const CategoriaRoutes = Router();
 
 CategoriaRoutes.post("/create-categoria", createCategoriaController);
 CategoriaRoutes.get("/find/:id", getbyIdCategoria);
-CategoriaRoutes.put("/updte-categoria", updateCategoriaController);
-CategoriaRoutes.get("getallCategoria", getAllCategoria);
-CategoriaRoutes.delete("/delete-categoria", deleteCategoria);
+CategoriaRoutes.put("/update-categoria/:id", updateCategoriaController);
+CategoriaRoutes.get("/getallCategoria", getAllCategoria);
+CategoriaRoutes.delete("/delete-categoria/:id", deleteCategoria);

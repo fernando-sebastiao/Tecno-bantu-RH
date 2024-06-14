@@ -9,10 +9,14 @@ export const categoriaSchema = z.object({
   salario_base: number().nonnegative({
     message: "O número não pode ser negativo",
   }),
-  Id_carreira: number().nonnegative({
-    message: "O número não pode ser negativo",
-  }),
-  Id_subCarreira: number().nonnegative({
-    message: "O número não pode ser negativo",
-  }),
+  Id_carreira: number()
+    .nonnegative({
+      message: "O número não pode ser negativo",
+    })
+    .optional(),
+  Id_subCarreira: number()
+    .nonnegative({
+      message: "O número não pode ser negativo",
+    })
+    .optional(),
 });

@@ -100,7 +100,7 @@ export const updateCategoriaController = async (
 
   try {
     // Verificar se o banco existe
-    const verificar = await prisma.banco.findFirst({
+    const verificar = await prisma.categoriaRH.findFirst({
       where: {
         id: Number(id),
       },

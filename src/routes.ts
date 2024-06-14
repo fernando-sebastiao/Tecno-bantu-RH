@@ -11,5 +11,5 @@ routes.use("/funcao", FuncaoRoutes);
 routes.use("/banco", BancoRoutes);
 routes.use("/carreira", CarreiraRoutes);
 routes.use("/categoria", CategoriaRoutes);
-routes.use("/SubCarreiras", SubCarreiraRoutes);
+routes.use("/subcarreiras", SubCarreiraRoutes);
 export { routes };

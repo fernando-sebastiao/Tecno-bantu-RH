@@ -7,6 +7,5 @@ export const SubCarreiraSchema = z.object({
   Id_carreira: z
     .number()
     .int()
-    .positive({ message: "O número precisa ser positivo" })
-    .optional(),
+    .positive({ message: "O número precisa ser positivo" }),
 });

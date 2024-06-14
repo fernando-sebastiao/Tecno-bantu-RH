@@ -3,7 +3,9 @@ import {
   createSubCarreiraController,
   deleteSubCarreiraController,
   getbyIdSubCarreiraController,
+  updateSubCarreiraController,
 } from "../controllers/Subcarreira/subCarreiraController";
+import { getAllSubCarreiras } from "../models/SubCarreira/list";
 
 export const SubCarreiraRoutes = Router();
 
@@ -13,3 +15,5 @@ SubCarreiraRoutes.delete(
   "/delete-subcarreira/:id",
   deleteSubCarreiraController
 );
+SubCarreiraRoutes.put("/update-subcarreira/:id", updateSubCarreiraController);
+SubCarreiraRoutes.get("/getallSubCarreiras", getAllSubCarreiras);

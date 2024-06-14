@@ -41,7 +41,7 @@ model CategoriaRH {
   id             Int           @id @default(autoincrement())
   nome_categoria String        @map("nome")
   Carreira       Carreira?     @relation(fields: [Id_carreira], references: [id], onDelete: Cascade)
-  salario_base   Float[]
+  salario_base   Float
   Id_carreira    Int?          @map("carreiraId")
   SubCarreira    SubCarreira?  @relation(fields: [Id_subCarreira], references: [id], onDelete: Cascade)
   Id_subCarreira Int?          @map("subCarreiraId")

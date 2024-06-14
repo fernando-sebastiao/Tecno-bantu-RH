@@ -42,7 +42,7 @@ CREATE TABLE "subcarreira" (
 CREATE TABLE "categoria" (
     "id" SERIAL NOT NULL,
     "nome" TEXT NOT NULL,
-    "salario_base" DOUBLE PRECISION[],
+    "salario_base" DOUBLE PRECISION NOT NULL,
     "carreiraId" INTEGER,
     "subCarreiraId" INTEGER,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -10,7 +10,7 @@ import { getAllFuncao } from "../models/Funcao/listFuncao";
 const FuncaoRoutes = Router();
 
 FuncaoRoutes.post("/create-funcao", createFuncaoController);
-FuncaoRoutes.get("/getallFuncao", getAllFuncao);
+FuncaoRoutes.get("/getall-funcao", getAllFuncao);
 FuncaoRoutes.get("/find/:id", getbyIdFuncaoController);
 FuncaoRoutes.delete("/delete-funcao/:id", deleteFuncaoController);
 FuncaoRoutes.put("/update-funcao/:id", updateFuncaoController);

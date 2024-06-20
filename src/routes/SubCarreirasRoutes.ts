@@ -16,4 +16,4 @@ SubCarreiraRoutes.delete(
   deleteSubCarreiraController
 );
 SubCarreiraRoutes.put("/update-subcarreira/:id", updateSubCarreiraController);
-SubCarreiraRoutes.get("/getallSub-carreiras", getAllSubCarreiras);
+SubCarreiraRoutes.get("/getall-subcarreiras", getAllSubCarreiras);

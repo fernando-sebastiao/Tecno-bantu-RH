@@ -12,5 +12,5 @@ export const CarreiraRoutes = Router();
 CarreiraRoutes.post("/create-carreira", createCarreiraController);
 CarreiraRoutes.get("/find/:id", getbyIdCarreiraController);
 CarreiraRoutes.delete("/delete-carreira/:id", deleteCarreiraController);
-CarreiraRoutes.get("/getall-carreira", getAllCarreira);
+CarreiraRoutes.get("/getall-carreiras", getAllCarreira);
 CarreiraRoutes.put("/update-carreira/:id", updateCarreiraController);

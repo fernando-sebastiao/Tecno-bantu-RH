@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(routes);
 app.get("/", (req: Request, res: Response) => {
-  return res.json({ message: "Server running so well!" });
+  return res.json({ message: "Server running so well! 🔥" });
 });
 const PORT = 8009;
 

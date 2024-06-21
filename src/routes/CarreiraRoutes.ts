@@ -9,8 +9,8 @@ import { getAllCarreira } from "../models/Carreira/listCarreira";
 
 export const CarreiraRoutes = Router();
 
-CarreiraRoutes.post("/create-carreira", createCarreiraController);
-CarreiraRoutes.get("/find/:id", getbyIdCarreiraController);
-CarreiraRoutes.delete("/delete-carreira/:id", deleteCarreiraController);
-CarreiraRoutes.get("/getall-carreiras", getAllCarreira);
-CarreiraRoutes.put("/update-carreira/:id", updateCarreiraController);
+CarreiraRoutes.post("/", createCarreiraController);
+CarreiraRoutes.get("/:id", getbyIdCarreiraController);
+CarreiraRoutes.delete("/:id", deleteCarreiraController);
+CarreiraRoutes.get("/dados", getAllCarreira);
+CarreiraRoutes.put("/:id", updateCarreiraController);

@@ -12,9 +12,32 @@ export const funcionarioSchema = z.object({
         })
         .join(" ");
     }),
-  nome_mae: string().min(8, {
-    message: "O nome precisa ter no minímo 8 caracteres!",
-  }),
+  nome_mae: string()
+    .min(8, {
+      message: "O nome precisa ter no minímo 8 caracteres!",
+    })
+    .transform((name) => {
+      return name
+        .trim()
+        .split(" ")
+        .map((palavra) => {
+          return palavra[0].toLocaleUpperCase().concat(palavra.substring(1));
+        })
+        .join(" ");
+    }),
+  nome_pai: string()
+    .min(8, {
+      message: "O nome precisa ter no minímo 8 caracteres!",
+    })
+    .transform((name) => {
+      return name
+        .trim()
+        .split(" ")
+        .map((word) => {
+          return word[0].toLocaleUpperCase().concat(word.substring(1));
+        })
+        .join(" ");
+    }),
   nascimento: date(),
   email: string()
     .nonempty("O e-mail é obrigatório!")

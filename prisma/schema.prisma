@@ -109,6 +109,7 @@ model Funcionario {
   departamentosComoSupervisor Departamento[]            @relation("FuncionarioSupervisor")
   funcionariodepartamento     FuncionarioDepartamento[]
   Banco                       Banco?                    @relation(fields: [Id_banco], references: [id], onDelete: Cascade)
+  avaliacao                   Avaliacao[]
 
   @@map("funcionario")
 }
@@ -177,6 +178,7 @@ model Departamento {
   updatedAt                 DateTime     @updatedAt @map("updated_at")
   funcionario_chefe         Funcionario? @relation("FuncionarioChefe", fields: [Id_funcionario_chefe], references: [id], onDelete: Cascade)
   funcionario_supervisor    Funcionario? @relation("FuncionarioSupervisor", fields: [Id_funcionario_supervisor], references: [id], onDelete: Cascade)
+  avaliacao                 Avaliacao[]
 
   funcionariodepartamento FuncionarioDepartamento[]
 }
@@ -191,7 +193,70 @@ model FuncionarioDepartamento {
   updatedAt       DateTime      @updatedAt @map("updated_at")
 }
 
+model FichaAvaliacao {
+  id                     Int                      @id @default(autoincrement())
+  nome_ficha             String                   @unique
+  objetivo               String?
+  perguntafichaavaliacao PerguntaFichaAvaliacao[]
+  avaliacao              Avaliacao[]
+  createdAt              DateTime                 @default(now()) @map("created_at")
+  updatedAt              DateTime                 @updatedAt @map("updated_at")
+}
+
+model Competencia {
+  id                     Int                      @id @default(autoincrement())
+  nome_competencia       String                   @unique
+  criterio               Criterio
+  perguntafichaavaliacao PerguntaFichaAvaliacao[]
+  createdAt              DateTime                 @default(now()) @map("created_at")
+  updatedAt              DateTime                 @updatedAt @map("updated_at")
+}
+
+model PerguntaFichaAvaliacao {
+  id               Int             @id @default(autoincrement())
+  competenciaId    Int?
+  fichaAvaliacaoId Int?
+  descricao        String
+  nivel_esperado   Int
+  createdAt        DateTime        @default(now()) @map("created_at")
+  updatedAt        DateTime        @updatedAt @map("updated_at")
+  Competencia      Competencia?    @relation(fields: [competenciaId], references: [id])
+  FichaAvaliacao   FichaAvaliacao? @relation(fields: [fichaAvaliacaoId], references: [id])
+}
+
+model Avaliacao {
+  id                       Int             @id @default(autoincrement())
+  id_funcionario_avaliador Int?
+  id_fichaAvaliacao        Int?
+  id_departamento          Int?
+  Tipo_Avaliacao           TipoAvaliacao
+  Funcionario              Funcionario?    @relation(fields: [id_funcionario_avaliador], references: [id])
+  FichaAvaliacao           FichaAvaliacao? @relation(fields: [id_fichaAvaliacao], references: [id])
+  Departamento             Departamento?   @relation(fields: [id_departamento], references: [id])
+  status                   Status
+  data                     DateTime        @default(now())
+  comentario               String?
+  createdAt                DateTime        @default(now()) @map("created_at")
+  updatedAt                DateTime        @updatedAt @map("updated_at")
+}
+
 //All Enum
+enum Status {
+  Submetido
+  Aprovado
+  Rejeitado
+  Requerido
+}
+
+enum TipoAvaliacao {
+  Auto_Avaliacao
+  Departamento
+}
+
+enum Criterio {
+  Comportamental
+  Tecnico
+}
 
 enum Tipo {
   livro

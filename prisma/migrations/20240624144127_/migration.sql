@@ -1,4 +1,13 @@
 -- CreateEnum
+CREATE TYPE "Status" AS ENUM ('Submetido', 'Aprovado', 'Rejeitado', 'Requerido');
+
+-- CreateEnum
+CREATE TYPE "TipoAvaliacao" AS ENUM ('Auto_Avaliacao', 'Departamento');
+
+-- CreateEnum
+CREATE TYPE "Criterio" AS ENUM ('Comportamental', 'Tecnico');
+
+-- CreateEnum
 CREATE TYPE "Tipo" AS ENUM ('livro', 'cientifico', 'outro');
 
 -- CreateEnum
@@ -184,6 +193,57 @@ CREATE TABLE "FuncionarioDepartamento" (
     CONSTRAINT "FuncionarioDepartamento_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "FichaAvaliacao" (
+    "id" SERIAL NOT NULL,
+    "nome_ficha" TEXT NOT NULL,
+    "objetivo" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "FichaAvaliacao_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Competencia" (
+    "id" SERIAL NOT NULL,
+    "nome_competencia" TEXT NOT NULL,
+    "criterio" "Criterio" NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Competencia_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "PerguntaFichaAvaliacao" (
+    "id" SERIAL NOT NULL,
+    "competenciaId" INTEGER,
+    "fichaAvaliacaoId" INTEGER,
+    "descricao" TEXT NOT NULL,
+    "nivel_esperado" INTEGER NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "PerguntaFichaAvaliacao_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Avaliacao" (
+    "id" SERIAL NOT NULL,
+    "id_funcionario_avaliador" INTEGER,
+    "id_fichaAvaliacao" INTEGER,
+    "id_departamento" INTEGER,
+    "Tipo_Avaliacao" "TipoAvaliacao" NOT NULL,
+    "status" "Status" NOT NULL,
+    "data" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "comentario" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Avaliacao_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "carreira_nome_key" ON "carreira"("nome");
 
@@ -201,6 +261,12 @@ CREATE UNIQUE INDEX "funcionario_numeroConta_key" ON "funcionario"("numeroConta"
 
 -- CreateIndex
 CREATE UNIQUE INDEX "funcionario_iban_key" ON "funcionario"("iban");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "FichaAvaliacao_nome_ficha_key" ON "FichaAvaliacao"("nome_ficha");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Competencia_nome_competencia_key" ON "Competencia"("nome_competencia");
 
 -- AddForeignKey
 ALTER TABLE "subcarreira" ADD CONSTRAINT "subcarreira_carreiraId_fkey" FOREIGN KEY ("carreiraId") REFERENCES "carreira"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -240,3 +306,18 @@ ALTER TABLE "FuncionarioDepartamento" ADD CONSTRAINT "FuncionarioDepartamento_de
 
 -- AddForeignKey
 ALTER TABLE "FuncionarioDepartamento" ADD CONSTRAINT "FuncionarioDepartamento_funcionarioId_fkey" FOREIGN KEY ("funcionarioId") REFERENCES "funcionario"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PerguntaFichaAvaliacao" ADD CONSTRAINT "PerguntaFichaAvaliacao_competenciaId_fkey" FOREIGN KEY ("competenciaId") REFERENCES "Competencia"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PerguntaFichaAvaliacao" ADD CONSTRAINT "PerguntaFichaAvaliacao_fichaAvaliacaoId_fkey" FOREIGN KEY ("fichaAvaliacaoId") REFERENCES "FichaAvaliacao"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Avaliacao" ADD CONSTRAINT "Avaliacao_id_funcionario_avaliador_fkey" FOREIGN KEY ("id_funcionario_avaliador") REFERENCES "funcionario"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Avaliacao" ADD CONSTRAINT "Avaliacao_id_fichaAvaliacao_fkey" FOREIGN KEY ("id_fichaAvaliacao") REFERENCES "FichaAvaliacao"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Avaliacao" ADD CONSTRAINT "Avaliacao_id_departamento_fkey" FOREIGN KEY ("id_departamento") REFERENCES "Departamento"("id") ON DELETE SET NULL ON UPDATE CASCADE;

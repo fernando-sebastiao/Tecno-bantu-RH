@@ -82,7 +82,6 @@ model Funcionario {
   nascimento                  DateTime
   email                       String                    @unique
   genero                      Genero
-  pais                        String
   tipo_identificacao          Identificacao
   num_identificacao           String
   nivel_academico             NIVEL_ACADEMICO

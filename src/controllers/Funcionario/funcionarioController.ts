@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
+import { UpdateFuncionario } from "../../models/Funcionario/UpdateFuncionario";
 import { CreateFuncionario } from "../../models/Funcionario/createFuncionario";
 import { funcionarioSchema } from "../../utils/validateFuncionario";
 
@@ -63,6 +64,89 @@ export const createFuncionarioController = async (
     }
     const dados = await CreateFuncionario(parseFuncionario.data);
     return res.status(201).json({ massage: "Created Funcionario!", dados });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const updateFuncionarioController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+
+  try {
+    // Verificar se o funcionario existe
+    const verificar = await prisma.funcionario.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!verificar) {
+      throw new CustomError("Funcionario Not Found", 400, [
+        "O número de identificação fornecido não existe",
+      ]);
+    }
+
+    // Validar os dados
+    const verificarDado = funcionarioSchema.safeParse(req.body);
+
+    if (!verificarDado.success) {
+      // Filtrar especificamente o erro de nome_completo.nonempty
+      const nomeCarreiraError = verificarDado.error.errors.find(
+        (error) =>
+          error.path.includes("nome_completo") &&
+          error.message === "O nome não pode ser enviado vázio!"
+      );
+
+      if (nomeCarreiraError) {
+        throw new CustomError("Erro de Validação", 400, [
+          nomeCarreiraError.message,
+        ]);
+      } else {
+        // Se não for o erro de nome_completo.nonempty, lançar todos os erros de validação
+        throw new CustomError(
+          "Erro de Validação",
+          400,
+          verificarDado.error.errors.map((error) => error.message)
+        );
+      }
+    }
+
+    // Atualizar os dados
+    const dados = await UpdateFuncionario({
+      id: Number(id),
+      nome_completo: verificarDado.data.nome_completo,
+      bairro: verificarDado.data.bairro,
+      id_categoria: verificarDado.data.id_categoria,
+      email: verificarDado.data.email,
+      genero: verificarDado.data.genero,
+      Id_banco: verificarDado.data.Id_banco,
+      nascimento: verificarDado.data.nascimento,
+      iban: verificarDado.data.iban,
+      id_funcao: verificarDado.data.id_funcao,
+      nivel_academico: verificarDado.data.nivel_academico,
+      nome_mae: verificarDado.data.nome_mae,
+      nome_pai: verificarDado.data.nome_pai,
+      num_identificacao: verificarDado.data.num_identificacao,
+      rua: verificarDado.data.rua,
+      telefone1: verificarDado.data.telefone1,
+      tipo_identificacao: verificarDado.data.tipo_identificacao,
+      avatar: verificarDado.data.avatar,
+      instagram: verificarDado.data.instagram,
+      linkedin: verificarDado.data.linkedin,
+      num_conta: verificarDado.data.num_conta,
+      telefone2: verificarDado.data.telefone2,
+      whatsApp: verificarDado.data.whatsApp,
+    });
+
+    return res.json({
+      Error: false,
+      message: "Funcionario atualizado com sucesso",
+      dados,
+    });
   } catch (err) {
     next(err);
   }

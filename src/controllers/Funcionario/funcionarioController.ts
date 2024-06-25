@@ -147,7 +147,7 @@ export const updateFuncionarioController = async (
 
     return res.json({
       Error: false,
-      message: "Funcionario atualizado com sucesso",
+      message: "Funcionário atualizado com sucesso",
       dados,
     });
   } catch (err) {
@@ -169,7 +169,7 @@ export const getbyIdFuncionarioController = async (
       },
     });
     if (!funcao) {
-      throw new CustomError("Funcionario não encontrado", 400, [
+      throw new CustomError("Funcionário não encontrado", 400, [
         "Funcionario não encontrado!",
       ]);
     }
@@ -180,7 +180,7 @@ export const getbyIdFuncionarioController = async (
   }
 };
 
-//Deletar um funcionario
+//Deletar um funcionário
 export const deleteFuncionario = async (
   req: Request,
   res: Response,
@@ -189,12 +189,12 @@ export const deleteFuncionario = async (
   const { id } = req.params;
 
   try {
-    const categoria = await prisma.funcionario.findFirst({
+    const funcionario = await prisma.funcionario.findFirst({
       where: { id: Number(id) },
     });
 
-    if (!categoria) {
-      throw new CustomError("Funcionario não encontrada", 400, [
+    if (!funcionario) {
+      throw new CustomError("Funcionário não encontrada", 400, [
         "O número de identificação fornecido não existe",
       ]);
     }

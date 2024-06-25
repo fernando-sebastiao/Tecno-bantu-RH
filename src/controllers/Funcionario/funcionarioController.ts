@@ -3,6 +3,8 @@ import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
 import { UpdateFuncionario } from "../../models/Funcionario/UpdateFuncionario";
 import { CreateFuncionario } from "../../models/Funcionario/createFuncionario";
+import { destroyFuncionario } from "../../models/Funcionario/destroyFuncionario";
+import { ListarFuncionarioById } from "../../models/Funcionario/getallbyId";
 import { funcionarioSchema } from "../../utils/validateFuncionario";
 
 export const createFuncionarioController = async (
@@ -69,6 +71,7 @@ export const createFuncionarioController = async (
   }
 };
 
+//Atualizar Funcionario
 export const updateFuncionarioController = async (
   req: Request,
   res: Response,
@@ -149,5 +152,62 @@ export const updateFuncionarioController = async (
     });
   } catch (err) {
     next(err);
+  }
+};
+//Consultar Funcionario pelo Id
+export const getbyIdFuncionarioController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    //verificar se existe
+    const funcao = await prisma.funcionario.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+    if (!funcao) {
+      throw new CustomError("Funcionario não encontrado", 400, [
+        "Funcionario não encontrado!",
+      ]);
+    }
+    const carreira = await ListarFuncionarioById(Number(id));
+    return res.status(200).json(carreira);
+  } catch (err) {
+    next(err); // Passa o erro para o middleware de tratamento de erros;
+  }
+};
+
+//Deletar um funcionario
+export const deleteFuncionario = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+
+  try {
+    const categoria = await prisma.funcionario.findFirst({
+      where: { id: Number(id) },
+    });
+
+    if (!categoria) {
+      throw new CustomError("Funcionario não encontrada", 400, [
+        "O número de identificação fornecido não existe",
+      ]);
+    }
+
+    // Fazer o delete de um Funcionario
+    const dados = await destroyFuncionario(Number(id));
+
+    return res.json({
+      Error: false,
+      message: "Funcionário Deletado com sucesso",
+      dados,
+    });
+  } catch (err) {
+    next(err); // Passa o erro para o middleware de tratamento de erros
   }
 };

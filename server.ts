@@ -1,6 +1,7 @@
 import cors from "cors";
 import express, { Request, Response } from "express";
 import { prisma } from "./src/database/db";
+import checkDatabase from "./src/middleware/checkDatabase";
 import { errorHandler } from "./src/middleware/errorHandler";
 import { routes } from "./src/routes";
 
@@ -9,6 +10,7 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
+app.use(checkDatabase);
 app.use(express.urlencoded({ extended: true }));
 app.use(routes);
 app.get("/", (req: Request, res: Response) => {

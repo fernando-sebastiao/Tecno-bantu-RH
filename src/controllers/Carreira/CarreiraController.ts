@@ -65,7 +65,6 @@ export const getbyIdCarreiraController = async (
   }
 };
 
-
 //Deletar Carreira
 export const deleteCarreiraController = async (
   req: Request,

@@ -2,7 +2,7 @@ import { PrismaClient, Regime } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-async function main() {
+export async function main() {
   const carreiras = [
     { id: 1, nome_carreira: "TÉCNICA SUPERIOR", regime: "geral" },
     { id: 2, nome_carreira: "TÉCNICA", regime: "geral" },
@@ -19,18 +19,19 @@ async function main() {
       where: { id: carreira.id },
       update: {
         nome_carreira: carreira.nome_carreira,
-        regime: carreira.regime as Regime, // Convertendo string para enum
+        regime: carreira.regime as Regime,
         updatedAt: new Date(),
       },
       create: {
         id: carreira.id,
         nome_carreira: carreira.nome_carreira,
-        regime: carreira.regime as Regime, // Convertendo string para enum
+        regime: carreira.regime as Regime,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
     });
   }
+
   const subCarreiras = [
     { id: 1, id_carreira: 4, nome_sub_carreira: "TELEFONISTA" },
     { id: 2, id_carreira: 4, nome_sub_carreira: "AUXILIAR ADMINISTRATIVO" },
@@ -59,6 +60,7 @@ async function main() {
       },
     });
   }
+
   const categorias = [
     {
       id: 1,
@@ -244,231 +246,84 @@ async function main() {
     },
     {
       id: 27,
-      nome_categoria: "ESCRITURÁRIO DATILIGRAFO",
-      salario_base: 0,
-      Id_carreira: 5,
-      Id_subCarreira: null,
-    },
-    {
-      id: 28,
-      nome_categoria: "ASPIRANTE",
-      salario_base: 0,
-      Id_carreira: 5,
-      Id_subCarreira: null,
-    },
-    {
-      id: 29,
-      nome_categoria: "3º OFICIAL",
-      salario_base: 0,
-      Id_carreira: 5,
-      Id_subCarreira: null,
-    },
-    {
-      id: 30,
-      nome_categoria: "2º OFICIAL",
-      salario_base: 0,
-      Id_carreira: 5,
-      Id_subCarreira: null,
-    },
-    {
-      id: 31,
-      nome_categoria: "1º OFICIAL",
-      salario_base: 0,
-      Id_carreira: 5,
-      Id_subCarreira: null,
-    },
-    {
-      id: 32,
-      nome_categoria: "OFICIAL ADMINISTRATIVO PRINCIPAL",
-      salario_base: 0,
-      Id_carreira: 5,
-      Id_subCarreira: null,
-    },
-    {
-      id: 33,
       nome_categoria: "TESOUREIRO DE 2ª CLASSE",
       salario_base: 0,
       Id_carreira: 5,
       Id_subCarreira: 4,
     },
     {
-      id: 34,
+      id: 28,
       nome_categoria: "TESOUREIRO DE 1ª CLASSE",
       salario_base: 0,
       Id_carreira: 5,
       Id_subCarreira: 4,
     },
     {
-      id: 35,
-      nome_categoria: "TESOUREIRO PRINCIPAL",
-      salario_base: 0,
-      Id_carreira: 5,
-      Id_subCarreira: 4,
-    },
-    {
-      id: 36,
+      id: 29,
       nome_categoria: "MOTORISTA DE PESADOS DE 2ª CLASSE",
       salario_base: 0,
       Id_carreira: 5,
       Id_subCarreira: 5,
     },
     {
-      id: 37,
+      id: 30,
       nome_categoria: "MOTORISTA DE PESADOS DE 1ª CLASSE",
       salario_base: 0,
       Id_carreira: 5,
       Id_subCarreira: 5,
     },
     {
-      id: 38,
-      nome_categoria: "MOTORISTA DE PESADOS PRINCIPAL",
-      salario_base: 0,
-      Id_carreira: 5,
-      Id_subCarreira: 5,
-    },
-    {
-      id: 39,
+      id: 31,
       nome_categoria: "MOTORISTA DE LIGEIROS DE 2ª CLASSE",
       salario_base: 0,
       Id_carreira: 5,
       Id_subCarreira: 6,
     },
     {
-      id: 40,
+      id: 32,
       nome_categoria: "MOTORISTA DE LIGEIROS DE 1ª CLASSE",
       salario_base: 0,
       Id_carreira: 5,
       Id_subCarreira: 6,
     },
     {
-      id: 41,
-      nome_categoria: "MOTORISTA DE LIGEIROS PRINCIPAL",
-      salario_base: 0,
-      Id_carreira: 5,
-      Id_subCarreira: 6,
-    },
-    {
-      id: 42,
-      nome_categoria: "OPERARIO QUALIFICADO DE 2ª CLASSE",
+      id: 33,
+      nome_categoria: "OPERARIO QUALIFICADO",
       salario_base: 0,
       Id_carreira: 6,
       Id_subCarreira: 7,
     },
     {
-      id: 43,
-      nome_categoria: "OPERARIO QUALIFICADO DE 1ª CLASSE",
-      salario_base: 0,
-      Id_carreira: 6,
-      Id_subCarreira: 7,
-    },
-    {
-      id: 44,
-      nome_categoria: "OPERARIO ENCARREGADO QUALIFICADO",
-      salario_base: 0,
-      Id_carreira: 6,
-      Id_subCarreira: 7,
-    },
-    {
-      id: 45,
-      nome_categoria: "OPERARIO NÃO QUALIFICADO DE 2ª CLASSE",
+      id: 34,
+      nome_categoria: "OPERARIO NÃO QUALIFICADO",
       salario_base: 0,
       Id_carreira: 6,
       Id_subCarreira: 8,
     },
     {
-      id: 46,
-      nome_categoria: "OPERARIO NÃO QUALIFICADO DE 1ª CLASSE",
-      salario_base: 0,
-      Id_carreira: 6,
-      Id_subCarreira: 8,
-    },
-    {
-      id: 47,
-      nome_categoria: "OPERARIO ENCARREGADO NÃO QUALIFICADO",
-      salario_base: 0,
-      Id_carreira: 6,
-      Id_subCarreira: 8,
-    },
-    {
-      id: 48,
-      nome_categoria: "PROFESSOR CATEDRÁTICO",
+      id: 35,
+      nome_categoria: "DOCENTE PRINCIPAL",
       salario_base: 0,
       Id_carreira: 7,
       Id_subCarreira: null,
     },
     {
-      id: 49,
-      nome_categoria: "PROFESSOR ASSOCIADO",
+      id: 36,
+      nome_categoria: "DOCENTE ESPECIAL",
       salario_base: 0,
       Id_carreira: 7,
       Id_subCarreira: null,
     },
     {
-      id: 50,
-      nome_categoria: "PROFESSOR AUXILIAR",
-      salario_base: 0,
-      Id_carreira: 7,
-      Id_subCarreira: null,
-    },
-    {
-      id: 51,
-      nome_categoria: "ASSISTENTE",
-      salario_base: 0,
-      Id_carreira: 7,
-      Id_subCarreira: null,
-    },
-    {
-      id: 52,
-      nome_categoria: "ASSISTENTE ESTAGIÁRIO",
-      salario_base: 0,
-      Id_carreira: 7,
-      Id_subCarreira: null,
-    },
-    {
-      id: 53,
-      nome_categoria: "MONITOR",
-      salario_base: 0,
-      Id_carreira: 7,
-      Id_subCarreira: null,
-    },
-    {
-      id: 54,
-      nome_categoria: "LEITOR",
-      salario_base: 0,
-      Id_carreira: 7,
-      Id_subCarreira: null,
-    },
-    {
-      id: 55,
-      nome_categoria: "INVESTIGADOR COORDENADOR",
-      salario_base: 0,
-      Id_carreira: 8,
-      Id_subCarreira: null,
-    },
-    {
-      id: 56,
+      id: 37,
       nome_categoria: "INVESTIGADOR PRINCIPAL",
       salario_base: 0,
       Id_carreira: 8,
       Id_subCarreira: null,
     },
     {
-      id: 57,
+      id: 38,
       nome_categoria: "INVESTIGADOR AUXILIAR",
-      salario_base: 0,
-      Id_carreira: 8,
-      Id_subCarreira: null,
-    },
-    {
-      id: 58,
-      nome_categoria: "ASSISTENTE DE INVESTIGAÇÃO",
-      salario_base: 0,
-      Id_carreira: 8,
-      Id_subCarreira: null,
-    },
-    {
-      id: 59,
-      nome_categoria: "ESTAGIÁRIO DE INVESTIGAÇÃO",
       salario_base: 0,
       Id_carreira: 8,
       Id_subCarreira: null,
@@ -476,17 +331,35 @@ async function main() {
   ];
 
   for (const categoria of categorias) {
-    await prisma.categoriaRH.create({
-      data: categoria,
+    await prisma.categoriaRH.upsert({
+      where: { id: categoria.id },
+      update: {
+        nome_categoria: categoria.nome_categoria,
+        salario_base: categoria.salario_base,
+        Id_carreira: categoria.Id_carreira,
+        Id_subCarreira: categoria.Id_subCarreira,
+        updatedAt: new Date(),
+      },
+      create: {
+        id: categoria.id,
+        nome_categoria: categoria.nome_categoria,
+        salario_base: categoria.salario_base,
+        Id_carreira: categoria.Id_carreira,
+        Id_subCarreira: categoria.Id_subCarreira,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     });
   }
+  console.log("Dados adicionados com Sucesso!");
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
+  .then(async () => {
     await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
   });

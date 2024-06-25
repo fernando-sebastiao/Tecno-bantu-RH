@@ -38,11 +38,11 @@ export const funcionarioSchema = z.object({
         })
         .join(" ");
     }),
-  nascimento: date(),
+  nascimento: date({ message: "Precisa digitar em formato de Data!" }),
   email: string()
     .nonempty("O e-mail é obrigatório!")
     .email("Formato de e-mail inválido"),
-  genero: z.enum(["masculino", "femenino"]),
+  genero: z.enum(["masculino", "feminino"]),
   tipo_identificacao: z.enum(["BI", "Passaporte", "Residente", "Outro"]),
   num_identificacao: z.string(),
   nivel_academico: z.enum([

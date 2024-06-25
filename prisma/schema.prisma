@@ -292,5 +292,5 @@ enum Regime {
 
 enum Genero {
   masculino
-  femenino
+  feminino
 }

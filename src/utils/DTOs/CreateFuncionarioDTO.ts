@@ -5,7 +5,7 @@ export interface FuncionarioDTO {
   nome_mae: string;
   nascimento: Date;
   email: string;
-  genero: "masculino" | "femenino";
+  genero: "masculino" | "feminino";
   tipo_identificacao: "BI" | "Passaporte" | "Residente" | "Outro";
   num_identificacao: string;
   nivel_academico:
@@ -23,9 +23,9 @@ export interface FuncionarioDTO {
   instagram?: string;
   bairro: string;
   rua: string;
-  id_funcao: number;
-  id_categoria: number;
+  id_funcao?: number;
+  id_categoria?: number;
   num_conta?: string;
   iban: string;
-  Id_banco: number;
+  Id_banco?: number;
 }

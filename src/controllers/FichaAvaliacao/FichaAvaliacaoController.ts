@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
+import { UpdateFichaAvaliacao } from "../../models/FichaAvaliacao/UpdateFichaAvaliacao";
 import { CreateFichaAvaliacao } from "../../models/FichaAvaliacao/createFichaAvaliacao";
 import { destroyFichaAvaliacao } from "../../models/FichaAvaliacao/destroy";
 import { ListarFichaAvaliacaoById } from "../../models/FichaAvaliacao/getallbyIdFichaAvaliacao";
@@ -94,5 +95,69 @@ export const deleteFichaAvaliacaoController = async (
     });
   } catch (err) {
     next(err); // Passa o erro para o middleware de tratamento de erros
+  }
+};
+
+//Atualizar a Ficha de Avaliação
+export const updateFichaAvaliacaoController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+
+  try {
+    // Verificar se a Ficha de Avaliação existe
+    const verificar = await prisma.fichaAvaliacao.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!verificar) {
+      throw new CustomError("Ficha de Avaliação não encontrada!", 400, [
+        "O número de identificação fornecido não existe",
+      ]);
+    }
+
+    // Validar os dados
+    const verificarDado = FichaAvaliacaoSchema.safeParse(req.body);
+
+    if (!verificarDado.success) {
+      // Filtrar especificamente o erro de nome_ficha.nonempty
+      const nomeFichaAvaliacao = verificarDado.error.errors.find(
+        (error) =>
+          error.path.includes("nome_ficha") &&
+          error.message === "O nome não pode ser enviado vázio!"
+      );
+
+      if (nomeFichaAvaliacao) {
+        throw new CustomError("Erro de Validação", 400, [
+          nomeFichaAvaliacao.message,
+        ]);
+      } else {
+        // Se não for o erro de nome_ficha.nonempty, lançar todos os erros de validação
+        throw new CustomError(
+          "Erro de Validação",
+          400,
+          verificarDado.error.errors.map((error) => error.message)
+        );
+      }
+    }
+
+    // Atualizar os dados
+    const dados = await UpdateFichaAvaliacao({
+      id: Number(id),
+      nome_ficha: verificarDado.data.nome_ficha,
+      objetivo: verificarDado.data.objetivo,
+    });
+
+    return res.json({
+      Error: false,
+      message: "Ficha de Avaliação atualizada com sucesso",
+      dados,
+    });
+  } catch (err) {
+    next(err);
   }
 };

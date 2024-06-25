@@ -62,6 +62,7 @@ export const createCategoriaController = async (
     next(err);
   }
 };
+//consultar categoria
 export const getbyIdCategoria = async (
   req: Request,
   res: Response,

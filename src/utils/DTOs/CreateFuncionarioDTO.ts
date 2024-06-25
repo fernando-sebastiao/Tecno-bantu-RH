@@ -5,10 +5,16 @@ export interface FuncionarioDTO {
   nome_mae: string;
   nascimento: Date;
   email: string;
-  genero: string;
-  tipo_identificacao: string;
-  num_identificacao: number;
-  nivel_academico: string;
+  genero: "masculino" | "femenino";
+  tipo_identificacao: "BI" | "Passaporte" | "Residente" | "Outro";
+  num_identificacao: string;
+  nivel_academico:
+    | "Medio"
+    | "Base"
+    | "Universitario"
+    | "Licenciado"
+    | "Mestrado"
+    | "Doctoramento";
   avatar?: string;
   telefone1: string;
   telefone2?: string;

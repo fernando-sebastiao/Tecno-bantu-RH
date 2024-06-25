@@ -42,9 +42,9 @@ export const funcionarioSchema = z.object({
   email: string()
     .nonempty("O e-mail é obrigatório!")
     .email("Formato de e-mail inválido"),
-  genero: z.enum(["M", "F"]),
+  genero: z.enum(["masculino", "femenino"]),
   tipo_identificacao: z.enum(["BI", "Passaporte", "Residente", "Outro"]),
-  num_identificacao: z.number(),
+  num_identificacao: z.string(),
   nivel_academico: z.enum([
     "Base",
     "Medio",

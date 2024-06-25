@@ -22,7 +22,7 @@ export const createFuncionarioController = async (
         parseFuncionario.error.errors.map((error) => error.message)
       );
     }
-    //verificar se a carreira já existe
+    //verificar se o funcionario já existe
     const verificar = await prisma.funcionario.findFirst({
       where: { nome_completo: parseFuncionario.data.nome_completo },
     });
@@ -88,7 +88,7 @@ export const updateFuncionarioController = async (
     });
 
     if (!verificar) {
-      throw new CustomError("Funcionario Not Found", 400, [
+      throw new CustomError("Funcionario não encontrado!", 400, [
         "O número de identificação fornecido não existe",
       ]);
     }
@@ -194,7 +194,7 @@ export const deleteFuncionario = async (
     });
 
     if (!funcionario) {
-      throw new CustomError("Funcionário não encontrada", 400, [
+      throw new CustomError("Funcionário não encontrado", 400, [
         "O número de identificação fornecido não existe",
       ]);
     }

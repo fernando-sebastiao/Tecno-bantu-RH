@@ -1,6 +1,10 @@
 import { Router } from "express";
-import { createDepartamentoController } from "../controllers/Departamento/departamentoController";
+import {
+  createDepartamentoController,
+  updateDepartamentoController,
+} from "../controllers/Departamento/departamentoController";
 
 export const DepartamentoRoutes = Router();
 
 DepartamentoRoutes.post("/", createDepartamentoController);
+DepartamentoRoutes.put("/:id", updateDepartamentoController);

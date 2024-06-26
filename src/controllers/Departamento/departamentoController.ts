@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
+import { UpdateDepartamento } from "../../models/Departamento/UpdateDepartamento";
 import { CreateDepartamento } from "../../models/Departamento/createDepartamento";
 import { departamentoSchema } from "../../utils/Validations/validateDepartamento";
 
@@ -36,7 +37,7 @@ export const createDepartamentoController = async (
     });
     if (!verificarfuncionarioChefe) {
       throw new CustomError("Este Funcionário não existe!", 400, [
-        "Este Funcionário não existe",
+        "Este Funcionário Chefe não existe!",
       ]);
     }
     //verificar se o funcionário supervisor existe
@@ -45,9 +46,77 @@ export const createDepartamentoController = async (
         id: parseDepartamento.data.Id_funcionario_supervisor,
       },
     });
+    if (!verificarfuncionarioSupervisor) {
+      throw new CustomError("Este Funcionário não existe!", 400, [
+        "Este Funcionário Supervisor não existe!",
+      ]);
+    }
 
     const dados = await CreateDepartamento(parseDepartamento.data);
     return res.status(201).json({ massage: "Created Funcionario!", dados });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const updateDepartamentoController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+  try {
+    // Verificar se o subCarreira existe
+    const verificar = await prisma.departamento.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!verificar) {
+      throw new CustomError("Departament Not Found", 400, [
+        "Departamento não Encontrado",
+      ]);
+    }
+
+    // Validar os dados
+    const verificarDado = departamentoSchema.safeParse(req.body);
+
+    if (!verificarDado.success) {
+      // Filtrar especificamente o erro de nome_departamentos.nonempty
+      const nomeBancoError = verificarDado.error.errors.find(
+        (error) =>
+          error.path.includes("nome_SubCarreira") &&
+          error.message === "O nome não pode ser enviado vázio!"
+      );
+
+      if (nomeBancoError) {
+        throw new CustomError("Erro de Validação", 400, [
+          nomeBancoError.message,
+        ]);
+      } else {
+        // Se não for o erro de nome_departamento.nonempty, lançar todos os erros de validação
+        throw new CustomError(
+          "Erro de Validação",
+          400,
+          verificarDado.error.errors.map((error) => error.message)
+        );
+      }
+    }
+
+    // Atualizar os dados
+    const dados = await UpdateDepartamento({
+      id: Number(id),
+      nome_departamento: verificarDado.data.nome_departamento,
+      Id_funcionario_chefe: verificarDado.data.Id_funcionario_chefe,
+      Id_funcionario_supervisor: verificarDado.data.Id_funcionario_supervisor,
+    });
+
+    return res.json({
+      Error: false,
+      message: "Departamento atualizado com sucesso",
+      dados,
+    });
   } catch (err) {
     next(err);
   }

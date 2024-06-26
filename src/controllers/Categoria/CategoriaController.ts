@@ -14,17 +14,26 @@ export const createCategoriaController = async (
 ) => {
   try {
     //verificar a validação
-    const parseCarreira = categoriaSchema.safeParse(req.body);
-    if (!parseCarreira.success) {
+    const parseCategoria = categoriaSchema.safeParse(req.body);
+    if (!parseCategoria.success) {
       throw new CustomError(
         "Erro de Validação",
         400,
-        parseCarreira.error.errors.map((error) => error.message)
+        parseCategoria.error.errors.map((error) => error.message)
       );
+    }
+    //verificar se a categoria já existe
+    const verificar = await prisma.categoriaRH.findFirst({
+      where: { nome_categoria: parseCategoria.data.nome_categoria },
+    });
+    if (verificar) {
+      throw new CustomError("This Categoria already exists", 400, [
+        "Esta Categoria já existe",
+      ]);
     }
     //verificar se a carreira existe
     const ifcarreiraExiste = await prisma.carreira.findUnique({
-      where: { id: parseCarreira.data.Id_carreira },
+      where: { id: parseCategoria.data.Id_carreira },
     });
     if (!ifcarreiraExiste) {
       throw new CustomError("Esta carreira não existe!", 400, [
@@ -34,7 +43,7 @@ export const createCategoriaController = async (
     //verificar se a subcarreira existe
     const ifsubCarreiraExiste = await prisma.subCarreira.findUnique({
       where: {
-        id: parseCarreira.data.Id_subCarreira,
+        id: parseCategoria.data.Id_subCarreira,
       },
     });
     if (!ifsubCarreiraExiste) {
@@ -42,26 +51,13 @@ export const createCategoriaController = async (
         "Esta Subcarreira não existe, tente novamente!",
       ]);
     }
-    //verificar se a categoria já existe
-    const verificar = await prisma.categoriaRH.findFirst({
-      where: { nome_categoria: parseCarreira.data.nome_categoria },
-    });
-    if (verificar) {
-      throw new CustomError("This Categoria already exists", 400, [
-        "Esta Categoria já existe",
-      ]);
-    }
-    const dados = await CreateCategoria({
-      nome_categoria: parseCarreira.data.nome_categoria,
-      salario_base: parseCarreira.data.salario_base,
-      Id_carreira: parseCarreira.data.Id_carreira,
-      Id_subCarreira: parseCarreira.data.Id_subCarreira,
-    });
+    const dados = await CreateCategoria(parseCategoria.data);
     return res.status(201).json({ massage: "Created Categoria", dados });
   } catch (err) {
     next(err);
   }
 };
+
 //consultar categoria
 export const getbyIdCategoria = async (
   req: Request,

@@ -47,8 +47,8 @@ export const createCategoriaController = async (
       where: { nome_categoria: parseCarreira.data.nome_categoria },
     });
     if (verificar) {
-      throw new CustomError("This Carreira already exists", 400, [
-        "Esta Carreira já existe",
+      throw new CustomError("This Categoria already exists", 400, [
+        "Esta Categoria já existe",
       ]);
     }
     const dados = await CreateCategoria({

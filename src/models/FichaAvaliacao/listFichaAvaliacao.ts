@@ -5,7 +5,11 @@ import { prisma } from "../../database/db";
 
 //listar Ficha Avaliacao
 export const getAllFichaAvaliacao = async (req: Request, res: Response) => {
-  const data = await prisma.fichaAvaliacao.findMany();
+  const data = await prisma.fichaAvaliacao.findMany({
+    orderBy: {
+      id: "asc",
+    },
+  });
 
   return res.status(200).json(data);
 };

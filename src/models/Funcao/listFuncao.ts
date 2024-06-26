@@ -4,7 +4,11 @@ import { Request, Response } from "express";
 import { prisma } from "../../database/db";
 
 export const getAllFuncao = async (req: Request, res: Response) => {
-  const data = await prisma.funcao.findMany();
+  const data = await prisma.funcao.findMany({
+    orderBy: {
+      id: "asc",
+    },
+  });
 
   return res.status(200).json(data);
 };

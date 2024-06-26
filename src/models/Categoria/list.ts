@@ -5,7 +5,11 @@ import { prisma } from "../../database/db";
 
 //listar Categorias
 export const getAllCategoria = async (req: Request, res: Response) => {
-  const data = await prisma.categoriaRH.findMany();
+  const data = await prisma.categoriaRH.findMany({
+    orderBy: {
+      id: "asc",
+    },
+  });
 
   return res.status(200).json(data);
 };

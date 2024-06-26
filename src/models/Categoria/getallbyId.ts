@@ -5,6 +5,9 @@ export const ListarCategoriaById = async (id: number) => {
   const dados = await prisma.categoriaRH.findMany({
     where: { id },
     select: {
+      id: true,
+      nome_categoria: true,
+      salario_base: true,
       Carreira: {
         select: { id: true, nome_carreira: true },
       },

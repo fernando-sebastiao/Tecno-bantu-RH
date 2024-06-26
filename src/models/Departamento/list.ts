@@ -5,7 +5,11 @@ import { prisma } from "../../database/db";
 
 //listar SubCategorias
 export const getAllDepartamento = async (req: Request, res: Response) => {
-  const data = await prisma.departamento.findMany();
+  const data = await prisma.departamento.findMany({
+    orderBy: {
+      id: "asc",
+    },
+  });
 
   return res.status(200).json(data);
 };

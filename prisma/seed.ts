@@ -510,3 +510,4 @@ main()
     await prisma.$disconnect();
     process.exit(1);
   });
+//Função encarregue de armazenar os dados automaticamente

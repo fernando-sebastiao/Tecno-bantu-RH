@@ -498,7 +498,7 @@ export async function main() {
       },
     });
   }
-  console.log("Dados adicionados com Sucesso!");
+  console.log("Dados Actualizados!✔");
 }
 
 main()

@@ -5,7 +5,7 @@ import { UpdateFichaAvaliacao } from "../../models/FichaAvaliacao/UpdateFichaAva
 import { CreateFichaAvaliacao } from "../../models/FichaAvaliacao/createFichaAvaliacao";
 import { destroyFichaAvaliacao } from "../../models/FichaAvaliacao/destroy";
 import { ListarFichaAvaliacaoById } from "../../models/FichaAvaliacao/getallbyIdFichaAvaliacao";
-import { FichaAvaliacaoSchema } from "../../utils/validateFichaAvaliacao";
+import { FichaAvaliacaoSchema } from "../../utils/Validations/validateFichaAvaliacao";
 
 export const createFichaAvaliacaoController = async (
   req: Request,

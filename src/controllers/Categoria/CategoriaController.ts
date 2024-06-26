@@ -5,7 +5,7 @@ import { CreateCategoria } from "../../models/Categoria/createCategoria";
 import { destroyCategoria } from "../../models/Categoria/destroy";
 import { ListarCategoriaById } from "../../models/Categoria/getallbyId";
 import { updateCategoria } from "../../models/Categoria/updateCategoria";
-import { categoriaSchema } from "../../utils/validateCategoria";
+import { categoriaSchema } from "../../utils/Validations/validateCategoria";
 
 export const createCategoriaController = async (
   req: Request,

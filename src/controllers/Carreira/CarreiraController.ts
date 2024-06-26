@@ -5,7 +5,7 @@ import { updateCarreira } from "../../models/Carreira/UpdateCarreira";
 import { CreateCarreira } from "../../models/Carreira/createCarreira";
 import { destroyCarreira } from "../../models/Carreira/destroy";
 import { ListarCarreiraById } from "../../models/Carreira/getallbyId";
-import { CarreiraSchema } from "../../utils/validateCarreira";
+import { CarreiraSchema } from "../../utils/Validations/validateCarreira";
 
 //criar um Carreira
 export const createCarreiraController = async (

@@ -5,7 +5,7 @@ import { UpdateFuncionario } from "../../models/Funcionario/UpdateFuncionario";
 import { CreateFuncionario } from "../../models/Funcionario/createFuncionario";
 import { destroyFuncionario } from "../../models/Funcionario/destroyFuncionario";
 import { ListarFuncionarioById } from "../../models/Funcionario/getallbyId";
-import { funcionarioSchema } from "../../utils/validateFuncionario";
+import { funcionarioSchema } from "../../utils/Validations/validateFuncionario";
 
 export const createFuncionarioController = async (
   req: Request,

@@ -5,7 +5,7 @@ import { CreateSubcarreira } from "../../models/SubCarreira/createSubCarreira";
 import { destroySubCarreira } from "../../models/SubCarreira/destroy";
 import { ListarSubCarreiraById } from "../../models/SubCarreira/getallbyId";
 import { updateSubCarreira } from "../../models/SubCarreira/updateSubCategoria";
-import { SubCarreiraSchema } from "../../utils/validateSubCarreira";
+import { SubCarreiraSchema } from "../../utils/Validations/validateSubCarreira";
 
 //Usuário criar subCarreira
 export const createSubCarreiraController = async (

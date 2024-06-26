@@ -5,7 +5,7 @@ import { UpdateFuncao } from "../../models/Funcao/UpdateFuncao";
 import { CreateFuncao } from "../../models/Funcao/createFuncao";
 import { destroyFuncao } from "../../models/Funcao/destroy";
 import { ListarFuncaoById } from "../../models/Funcao/getAllbyId";
-import { funcaoSchema } from "../../utils/validateFuncao";
+import { funcaoSchema } from "../../utils/Validations/validateFuncao";
 
 //Usuário criar funcao
 export const createFuncaoController = async (

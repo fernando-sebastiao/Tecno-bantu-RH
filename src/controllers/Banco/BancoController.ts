@@ -5,7 +5,7 @@ import { updateBanco } from "../../models/Banco/UpdateBanco";
 import { CreateBanco } from "../../models/Banco/createBanco";
 import { destroyBanco } from "../../models/Banco/destroy";
 import { ListarBancoById } from "../../models/Banco/getAllbyId";
-import { BancoSchema } from "../../utils/validateBanco";
+import { BancoSchema } from "../../utils/Validations/validateBanco";
 
 //Usuário criar funcao
 export const createBanco = async (

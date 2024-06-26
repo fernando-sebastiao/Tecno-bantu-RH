@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
 import { CreateDepartamento } from "../../models/Departamento/createDepartamento";
-import { departamentoSchema } from "../../utils/validateDepartamento";
+import { departamentoSchema } from "../../utils/Validations/validateDepartamento";
 
 export const createDepartamentoController = async (
   req: Request,

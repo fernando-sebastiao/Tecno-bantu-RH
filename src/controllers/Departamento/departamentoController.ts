@@ -3,6 +3,7 @@ import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
 import { UpdateDepartamento } from "../../models/Departamento/UpdateDepartamento";
 import { CreateDepartamento } from "../../models/Departamento/createDepartamento";
+import { destroyDepartamento } from "../../models/Departamento/destroyDepartamento";
 import { departamentoSchema } from "../../utils/Validations/validateDepartamento";
 
 export const createDepartamentoController = async (
@@ -119,5 +120,35 @@ export const updateDepartamentoController = async (
     });
   } catch (err) {
     next(err);
+  }
+};
+export const deleteDepartamentoController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+
+  try {
+    const banco = await prisma.departamento.findFirst({
+      where: { id: Number(id) },
+    });
+
+    if (!banco) {
+      throw new CustomError("Departamento não encontrado", 400, [
+        "Departamento não encontrado!",
+      ]);
+    }
+
+    // Fazer o delete do Departamento
+    const dados = await destroyDepartamento(Number(id));
+
+    return res.json({
+      Error: false,
+      message: "Departamento Deletado com sucesso",
+      dados,
+    });
+  } catch (err) {
+    next(err); // Passa o erro para o middleware de tratamento de erros
   }
 };

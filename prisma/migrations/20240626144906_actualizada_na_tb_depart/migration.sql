@@ -194,14 +194,14 @@ CREATE TABLE "FuncionarioDepartamento" (
 );
 
 -- CreateTable
-CREATE TABLE "FichaAvaliacao" (
+CREATE TABLE "fichaAvaliacao" (
     "id" SERIAL NOT NULL,
     "nome_ficha" TEXT NOT NULL,
     "objetivo" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "FichaAvaliacao_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "fichaAvaliacao_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -263,7 +263,7 @@ CREATE UNIQUE INDEX "funcionario_numeroConta_key" ON "funcionario"("numeroConta"
 CREATE UNIQUE INDEX "funcionario_iban_key" ON "funcionario"("iban");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "FichaAvaliacao_nome_ficha_key" ON "FichaAvaliacao"("nome_ficha");
+CREATE UNIQUE INDEX "fichaAvaliacao_nome_ficha_key" ON "fichaAvaliacao"("nome_ficha");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Competencia_nome_competencia_key" ON "Competencia"("nome_competencia");
@@ -311,13 +311,13 @@ ALTER TABLE "FuncionarioDepartamento" ADD CONSTRAINT "FuncionarioDepartamento_fu
 ALTER TABLE "PerguntaFichaAvaliacao" ADD CONSTRAINT "PerguntaFichaAvaliacao_competenciaId_fkey" FOREIGN KEY ("competenciaId") REFERENCES "Competencia"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "PerguntaFichaAvaliacao" ADD CONSTRAINT "PerguntaFichaAvaliacao_fichaAvaliacaoId_fkey" FOREIGN KEY ("fichaAvaliacaoId") REFERENCES "FichaAvaliacao"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "PerguntaFichaAvaliacao" ADD CONSTRAINT "PerguntaFichaAvaliacao_fichaAvaliacaoId_fkey" FOREIGN KEY ("fichaAvaliacaoId") REFERENCES "fichaAvaliacao"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Avaliacao" ADD CONSTRAINT "Avaliacao_id_funcionario_avaliador_fkey" FOREIGN KEY ("id_funcionario_avaliador") REFERENCES "funcionario"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Avaliacao" ADD CONSTRAINT "Avaliacao_id_fichaAvaliacao_fkey" FOREIGN KEY ("id_fichaAvaliacao") REFERENCES "FichaAvaliacao"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Avaliacao" ADD CONSTRAINT "Avaliacao_id_fichaAvaliacao_fkey" FOREIGN KEY ("id_fichaAvaliacao") REFERENCES "fichaAvaliacao"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Avaliacao" ADD CONSTRAINT "Avaliacao_id_departamento_fkey" FOREIGN KEY ("id_departamento") REFERENCES "Departamento"("id") ON DELETE SET NULL ON UPDATE CASCADE;

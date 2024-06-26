@@ -19,3 +19,4 @@ routes.use("/funcionario", FuncionarioRoutes);
 routes.use("/ficha-avaliacao", FichaAvaliacaoRoutes);
 routes.use("/departamento", DepartamentoRoutes);
 export { routes };
+//todas as rotas

@@ -27,3 +27,5 @@ const checkDatabase = async (
 };
 
 export default checkDatabase;
+
+//Alterado alguma coisa

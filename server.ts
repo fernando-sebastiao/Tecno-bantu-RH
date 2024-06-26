@@ -10,7 +10,6 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
-app.use(checkDatabase);
 app.use(express.urlencoded({ extended: true }));
 app.use(routes);
 app.get("/", (req: Request, res: Response) => {
@@ -37,3 +36,4 @@ const close = () => {
 process.on("SIGINT", close);
 
 app.use(errorHandler);
+app.use(checkDatabase);

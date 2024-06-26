@@ -6,6 +6,7 @@ import { DepartamentoRoutes } from "./routes/DepartamentoRoutes";
 import { FichaAvaliacaoRoutes } from "./routes/FichaAvaliacaoRoutes";
 import { FuncaoRoutes } from "./routes/FuncaoRoutes";
 import { FuncionarioRoutes } from "./routes/FuncionarioRoutes";
+import { PublicacaoRoutes } from "./routes/PublicacaoRoutes";
 import { SubCarreiraRoutes } from "./routes/SubCarreirasRoutes";
 
 const routes = Router();
@@ -18,5 +19,6 @@ routes.use("/subcarreira", SubCarreiraRoutes);
 routes.use("/funcionario", FuncionarioRoutes);
 routes.use("/ficha-avaliacao", FichaAvaliacaoRoutes);
 routes.use("/departamento", DepartamentoRoutes);
+routes.use("/publicacao", PublicacaoRoutes);
 export { routes };
 //todas as rotas

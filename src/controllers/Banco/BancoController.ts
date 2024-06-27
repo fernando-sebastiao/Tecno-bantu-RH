@@ -4,7 +4,7 @@ import { CustomError } from "../../errors/CustomError";
 import { updateBanco } from "../../models/Banco/UpdateBanco";
 import { CreateBanco } from "../../models/Banco/createBanco";
 import { destroyBanco } from "../../models/Banco/destroy";
-import { ListarBancoById } from "../../models/Banco/getAllbyId";
+import { ListarBanco } from "../../models/Banco/getAllbyId";
 import { BancoSchema } from "../../utils/Validations/validateBanco";
 
 //Usuário criar funcao
@@ -39,7 +39,6 @@ export const createBanco = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
-    next(err); // Passa o erro para o middleware de tratamento de erros
   }
 };
 
@@ -50,27 +49,22 @@ export const getbyIdBanco = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
-    //verificar se existe
-    const funcao = await prisma.banco.findUnique({
-      where: {
-        id: Number(id),
-      },
-    });
-    if (!funcao) {
+    const query = req.query;
+
+    // Verificar se a busca retorna resultados
+    const banco = await ListarBanco(query);
+    if (banco.length === 0) {
       throw new CustomError("Banco não encontrado", 400, [
-        "O Banco não encontrado",
+        "O Banco não foi encontrado",
       ]);
     }
-    const banco = await ListarBancoById(Number(id));
+
     return res.status(200).json(banco);
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
-    next(err); // Passa o erro para o middleware de tratamento de erros;
   }
 };
-
 //Actualizar o Banco
 
 export const updateBancoController = async (
@@ -136,7 +130,6 @@ export const updateBancoController = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
-    next(err);
   }
 };
 //Usuario Deletar Função
@@ -167,6 +160,5 @@ export const deleteBanco = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
-    next(err); // Passa o erro para o middleware de tratamento de erros
   }
 };

@@ -11,6 +11,6 @@ export const BancoRoutes = Router();
 
 BancoRoutes.post("/", createBanco);
 BancoRoutes.get("/", getAllBanco);
-BancoRoutes.get("/:id", getbyIdBanco);
+BancoRoutes.get("/", getbyIdBanco);
 BancoRoutes.put("/:id", updateBancoController);
 BancoRoutes.delete("/:id", deleteBanco);

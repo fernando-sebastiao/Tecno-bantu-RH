@@ -1,4 +1,5 @@
 import { prisma } from "../../database/db";
+import { CustomError } from "../../errors/CustomError";
 import { PublicacaoDTO } from "../../utils/DTOs/CreatePublicacao";
 
 export const CreatePublicacao = async ({
@@ -7,9 +8,12 @@ export const CreatePublicacao = async ({
   tipo,
   entidade,
 }: PublicacaoDTO) => {
-  //criando a publicacao
-  const dados = await prisma.publicacoes.create({
-    data: { titulo, ano, entidade, tipo },
-  });
-  return dados;
+  try {
+    const dados = await prisma.publicacoes.create({
+      data: { titulo, ano: new Date(ano), entidade, tipo },
+    });
+    return dados;
+  } catch (error) {
+    throw new CustomError(`${error}`);
+  }
 };

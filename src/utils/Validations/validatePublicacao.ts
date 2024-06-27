@@ -1,8 +1,10 @@
 import { z } from "zod";
 
 export const schemaPublicacao = z.object({
-  titulo: z.string({ message: "O titulo precisa receber textos!" }),
-  entidade: z.string(),
-  ano: z.date({ message: "Precisa ser do formato data!" }),
-  tipo: z.enum(["livro", "cientifico", "outro"], {message: "O valor digitado não faz parte do tipo de dado!"}),
+  titulo: z.string().nonempty({ message: "O título não pode estar vazio" }),
+  entidade: z.string().nonempty({ message: "A entidade não pode estar vazia" }),
+  ano: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "Ano deve ser uma data válida",
+  }),
+  tipo: z.enum(["cientifico", "livro", "outro"]),
 });

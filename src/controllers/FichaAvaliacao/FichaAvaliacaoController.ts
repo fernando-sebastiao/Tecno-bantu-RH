@@ -37,6 +37,8 @@ export const createFichaAvaliacaoController = async (
       .status(201)
       .json({ massage: "Ficha de Avaliação Criada!!", dados });
   } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
     next(err);
   }
 };
@@ -62,6 +64,8 @@ export const getbyIdFichaAvaliacaoController = async (
     const FichaAvaliacao = await ListarFichaAvaliacaoById(Number(id));
     return res.status(200).json(FichaAvaliacao);
   } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
     next(err); // Passa o erro para o middleware de tratamento de erros;
   }
 };
@@ -94,6 +98,8 @@ export const deleteFichaAvaliacaoController = async (
       dados,
     });
   } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
     next(err); // Passa o erro para o middleware de tratamento de erros
   }
 };
@@ -158,6 +164,8 @@ export const updateFichaAvaliacaoController = async (
       dados,
     });
   } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
     next(err);
   }
 };

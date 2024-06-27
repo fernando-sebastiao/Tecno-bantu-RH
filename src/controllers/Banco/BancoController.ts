@@ -37,6 +37,8 @@ export const createBanco = async (
 
     return res.status(201).json({ massage: "Created Bank", dados });
   } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
     next(err); // Passa o erro para o middleware de tratamento de erros
   }
 };
@@ -63,6 +65,8 @@ export const getbyIdBanco = async (
     const banco = await ListarBancoById(Number(id));
     return res.status(200).json(banco);
   } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
     next(err); // Passa o erro para o middleware de tratamento de erros;
   }
 };
@@ -130,6 +134,8 @@ export const updateBancoController = async (
       dados,
     });
   } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
     next(err);
   }
 };
@@ -159,6 +165,8 @@ export const deleteBanco = async (
       dados,
     });
   } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
     next(err); // Passa o erro para o middleware de tratamento de erros
   }
 };

@@ -1,4 +1,4 @@
-import { date, number, string, z } from "zod";
+import { number, string, z } from "zod";
 
 export const funcionarioSchema = z.object({
   nome_completo: string()
@@ -38,7 +38,9 @@ export const funcionarioSchema = z.object({
         })
         .join(" ");
     }),
-  nascimento: date({ message: "Precisa digitar em formato de Data!" }),
+  nascimento: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "Ano deve ser uma data válida",
+  }),
   email: string()
     .nonempty("O e-mail é obrigatório!")
     .email("Formato de e-mail inválido"),

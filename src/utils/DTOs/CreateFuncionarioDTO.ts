@@ -3,7 +3,7 @@ export interface FuncionarioDTO {
   nome_completo: string;
   nome_pai: string;
   nome_mae: string;
-  nascimento: Date;
+  nascimento: string;
   email: string;
   genero: "masculino" | "feminino";
   tipo_identificacao: "BI" | "Passaporte" | "Residente" | "Outro";

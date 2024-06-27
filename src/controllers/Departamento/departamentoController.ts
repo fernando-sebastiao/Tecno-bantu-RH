@@ -56,6 +56,8 @@ export const createDepartamentoController = async (
     const dados = await CreateDepartamento(parseDepartamento.data);
     return res.status(201).json({ massage: "Created Funcionario!", dados });
   } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
     next(err);
   }
 };
@@ -119,9 +121,12 @@ export const updateDepartamentoController = async (
       dados,
     });
   } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
     next(err);
   }
 };
+//Deletar departamento
 export const deleteDepartamentoController = async (
   req: Request,
   res: Response,
@@ -149,6 +154,8 @@ export const deleteDepartamentoController = async (
       dados,
     });
   } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
     next(err); // Passa o erro para o middleware de tratamento de erros
   }
 };

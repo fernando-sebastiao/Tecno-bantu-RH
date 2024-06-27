@@ -1,7 +1,7 @@
 export interface PublicacaoDTO {
   id?: number;
   titulo: string;
-  ano: Date;
+  ano: string;
   tipo: "livro" | "cientifico" | "outro";
   entidade: string;
 }

@@ -12,7 +12,7 @@ export const createPublicacaoController = async (
   next: NextFunction
 ) => {
   try {
-    //Validar os dados com Zod
+    // Validar os dados com Zod
     const parsePublicacao = schemaPublicacao.safeParse(req.body);
     if (!parsePublicacao.success) {
       throw new CustomError(
@@ -21,12 +21,14 @@ export const createPublicacaoController = async (
         parsePublicacao.error.errors.map((error) => error.message)
       );
     }
-    //criando uma nova Funcao
+
+    // Criando uma nova Publicação
     const dados = await CreatePublicacao(parsePublicacao.data);
 
-    return res.status(201).json({ massage: "Created Function", dados });
+    return res.status(201).json({ message: "Post Created!", dados });
   } catch (err) {
-    next(err); // Passa o erro para o middleware de tratamento de erros
+    console.error(err);
+    return res.status(400).json({ message: err });
   }
 };
 
@@ -58,6 +60,8 @@ export const deletePublicacaoController = async (
       dados,
     });
   } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
     next(err); // Passa o erro para o middleware de tratamento de erros
   }
 };
@@ -105,6 +109,8 @@ export const updatePublicacaoController = async (
 
     res.json(dados);
   } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
     next(err);
   }
 };

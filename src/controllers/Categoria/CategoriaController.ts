@@ -54,7 +54,8 @@ export const createCategoriaController = async (
     const dados = await CreateCategoria(parseCategoria.data);
     return res.status(201).json({ massage: "Created Categoria", dados });
   } catch (err) {
-    next(err);
+    console.error(err);
+    return res.status(400).json({ message: err });
   }
 };
 
@@ -80,7 +81,8 @@ export const getbyIdCategoria = async (
     const categoria = await ListarCategoriaById(Number(id));
     return res.status(200).json(categoria);
   } catch (err) {
-    next(err); // Passa o erro para o middleware de tratamento de erros;
+    console.error(err);
+    return res.status(400).json({ message: err });
   }
 };
 
@@ -149,7 +151,8 @@ export const updateCategoriaController = async (
       dados,
     });
   } catch (err) {
-    next(err);
+    console.error(err);
+    return res.status(400).json({ message: err });
   }
 };
 
@@ -181,6 +184,7 @@ export const deleteCategoria = async (
       dados,
     });
   } catch (err) {
-    next(err); // Passa o erro para o middleware de tratamento de erros
+    console.error(err);
+    return res.status(400).json({ message: err });
   }
 };

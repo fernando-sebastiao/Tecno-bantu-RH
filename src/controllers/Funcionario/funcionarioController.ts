@@ -31,6 +31,61 @@ export const createFuncionarioController = async (
         "Este Funcionario já existe",
       ]);
     }
+    //verificar se o email já existe
+    const verficarEmail = await prisma.funcionario.findFirst({
+      where: {
+        email: parseFuncionario.data.email,
+      },
+    });
+    if (verficarEmail) {
+      throw new CustomError("This Email already exists", 400, [
+        "Este Email já existe",
+      ]);
+    }
+    //verificar número de telefone1
+    const verficarTelefone1 = await prisma.funcionario.findFirst({
+      where: {
+        telefone1: parseFuncionario.data.telefone1,
+      },
+    });
+    if (verficarTelefone1) {
+      throw new CustomError("This number already exists", 400, [
+        "Este Número de telefone já pertence a outro Funcionário!",
+      ]);
+    }
+    //verificar número de telefone2
+    const verficarTelefone2 = await prisma.funcionario.findFirst({
+      where: {
+        telefone2: parseFuncionario.data.telefone2,
+      },
+    });
+    if (verficarTelefone2) {
+      throw new CustomError("This number already exists", 400, [
+        "Este Número de telefone já pertence a outro Funcionário!",
+      ]);
+    }
+    //verificar o número de conta
+    const verficarNum_Conta = await prisma.funcionario.findFirst({
+      where: {
+        num_conta: parseFuncionario.data.num_conta,
+      },
+    });
+    if (verficarNum_Conta) {
+      throw new CustomError("This count number already exists", 400, [
+        "Este Número de Conta já pertence a outro Funcionário!",
+      ]);
+    }
+    //verificar o Iban
+    const verficarIban = await prisma.funcionario.findFirst({
+      where: {
+        iban: parseFuncionario.data.iban,
+      },
+    });
+    if (verficarIban) {
+      throw new CustomError("This iban number already exists", 400, [
+        "Este Iban já pertence a outro Funcionário!",
+      ]);
+    }
     //verificar se a função existe
     const verificarFuncao = await prisma.funcao.findFirst({
       where: {
@@ -67,7 +122,8 @@ export const createFuncionarioController = async (
     const dados = await CreateFuncionario(parseFuncionario.data);
     return res.status(201).json({ massage: "Created Funcionario!", dados });
   } catch (err) {
-    next(err);
+    console.error(err);
+    return res.status(400).json({ message: err });
   }
 };
 
@@ -151,7 +207,8 @@ export const updateFuncionarioController = async (
       dados,
     });
   } catch (err) {
-    next(err);
+    console.error(err);
+    return res.status(400).json({ message: err });
   }
 };
 //Consultar Funcionario pelo Id
@@ -208,6 +265,8 @@ export const deleteFuncionario = async (
       dados,
     });
   } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
     next(err); // Passa o erro para o middleware de tratamento de erros
   }
 };

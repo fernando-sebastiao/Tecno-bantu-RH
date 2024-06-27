@@ -35,7 +35,7 @@ export const CreateFuncionario = async ({
       email,
       genero,
       Id_banco,
-      nascimento,
+      nascimento: new Date(nascimento),
       iban,
       id_funcao,
       nivel_academico,

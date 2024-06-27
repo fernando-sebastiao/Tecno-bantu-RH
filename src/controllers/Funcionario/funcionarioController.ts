@@ -252,7 +252,7 @@ export const deleteFuncionario = async (
 
     if (!funcionario) {
       throw new CustomError("Funcionário não encontrado", 400, [
-        "O número de identificação fornecido não existe",
+        "Funcionário não encontrado!",
       ]);
     }
 
@@ -267,6 +267,5 @@ export const deleteFuncionario = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
-    next(err); // Passa o erro para o middleware de tratamento de erros
   }
 };

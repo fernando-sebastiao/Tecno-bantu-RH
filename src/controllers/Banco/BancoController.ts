@@ -4,7 +4,7 @@ import { CustomError } from "../../errors/CustomError";
 import { updateBanco } from "../../models/Banco/UpdateBanco";
 import { CreateBanco } from "../../models/Banco/createBanco";
 import { destroyBanco } from "../../models/Banco/destroy";
-import { ListarBanco } from "../../models/Banco/getAllbyId";
+import { FiltrarBanco, propsal } from "../../models/Banco/filter";
 import { BancoSchema } from "../../utils/Validations/validateBanco";
 
 //Usuário criar funcao
@@ -49,10 +49,10 @@ export const getbyIdBanco = async (
   next: NextFunction
 ) => {
   try {
-    const query = req.query;
+    const query = req.query as propsal;
 
     // Verificar se a busca retorna resultados
-    const banco = await ListarBanco(query);
+    const banco = await FiltrarBanco(query);
     if (banco.length === 0) {
       throw new CustomError("Banco não encontrado", 400, [
         "O Banco não foi encontrado",

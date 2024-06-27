@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  FiltrarPublicacaoController,
   createPublicacaoController,
   deletePublicacaoController,
   updatePublicacaoController,
@@ -9,6 +10,7 @@ import { getAllPublicacao } from "../models/Publicacao/listPublicacao";
 export const PublicacaoRoutes = Router();
 
 PublicacaoRoutes.post("/", createPublicacaoController);
-PublicacaoRoutes.get("/", getAllPublicacao);
+PublicacaoRoutes.get("/all", getAllPublicacao);
 PublicacaoRoutes.delete("/:id", deletePublicacaoController);
 PublicacaoRoutes.put("/:id", updatePublicacaoController);
+PublicacaoRoutes.get("/", FiltrarPublicacaoController);

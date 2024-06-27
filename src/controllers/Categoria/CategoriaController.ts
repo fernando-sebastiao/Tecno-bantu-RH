@@ -3,7 +3,10 @@ import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
 import { CreateCategoria } from "../../models/Categoria/createCategoria";
 import { destroyCategoria } from "../../models/Categoria/destroy";
-import { ListarCategoriaById } from "../../models/Categoria/getallbyId";
+import {
+  CategoriaProps,
+  FiltrarCategoria,
+} from "../../models/Categoria/filtrar";
 import { updateCategoria } from "../../models/Categoria/updateCategoria";
 import { categoriaSchema } from "../../utils/Validations/validateCategoria";
 
@@ -66,19 +69,13 @@ export const getbyIdCategoria = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
-    //verificar se existe
-    const funcao = await prisma.categoriaRH.findUnique({
-      where: {
-        id: Number(id),
-      },
-    });
-    if (!funcao) {
-      throw new CustomError("Categoria não encontrado", 400, [
-        "A Categoria não encontrado",
+    const query = req.query as CategoriaProps;
+    const categoria = await FiltrarCategoria(query);
+    if (categoria.length === 0) {
+      throw new CustomError("Carreira não encontrada", 400, [
+        "Carreira não foi encontrada!",
       ]);
     }
-    const categoria = await ListarCategoriaById(Number(id));
     return res.status(200).json(categoria);
   } catch (err) {
     console.error(err);

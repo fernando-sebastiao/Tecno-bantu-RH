@@ -4,6 +4,10 @@ import { CustomError } from "../../errors/CustomError";
 import { UpdatePublicacao } from "../../models/Publicacao/UpdatePublicacao";
 import { CreatePublicacao } from "../../models/Publicacao/createPublicacao";
 import { destroyPublicacao } from "../../models/Publicacao/destroyPublicacao";
+import {
+  FiltrarPublicacao,
+  PublicacaoProps,
+} from "../../models/Publicacao/filtrarPublicacao";
 import { schemaPublicacao } from "../../utils/Validations/validatePublicacao";
 
 export const createPublicacaoController = async (
@@ -62,7 +66,6 @@ export const deletePublicacaoController = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
-    next(err); // Passa o erro para o middleware de tratamento de erros
   }
 };
 
@@ -111,6 +114,27 @@ export const updatePublicacaoController = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
-    next(err);
+  }
+};
+
+//Para filtrar Publicação
+export const FiltrarPublicacaoController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const query = req.query as PublicacaoProps;
+
+    const dados = FiltrarPublicacao(query);
+    if ((await dados).length === 0) {
+      throw new CustomError("Carreira não encontrada", 400, [
+        "Carreira não foi encontrada!",
+      ]);
+    }
+    return res.status(200).json(dados);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ message: err });
   }
 };

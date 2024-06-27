@@ -1,9 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
+import {
+  FiltrarSubcarreira,
+  subCarreiraProps,
+} from "../../models/SubCarreira/FiltrarSubcarreira";
 import { CreateSubcarreira } from "../../models/SubCarreira/createSubCarreira";
 import { destroySubCarreira } from "../../models/SubCarreira/destroy";
-import { ListarSubCarreiraById } from "../../models/SubCarreira/getallbyId";
 import { updateSubCarreira } from "../../models/SubCarreira/updateSubCategoria";
 import { SubCarreiraSchema } from "../../utils/Validations/validateSubCarreira";
 
@@ -59,19 +62,14 @@ export const getbyIdSubCarreiraController = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
-    //verificar se existe
-    const funcao = await prisma.subCarreira.findUnique({
-      where: {
-        id: Number(id),
-      },
-    });
-    if (!funcao) {
-      throw new CustomError("SubCarreira not found!", 400, [
-        "SubCarreira não encontrada!",
+    const query = req.query as subCarreiraProps;
+
+    const SubCarreira = await FiltrarSubcarreira(query);
+    if (SubCarreira.length === 0) {
+      throw new CustomError("Funcionário não encontrado!", 400, [
+        "Funcionário não foi encontrado!",
       ]);
     }
-    const SubCarreira = await ListarSubCarreiraById(Number(id));
     return res.status(200).json(SubCarreira);
   } catch (err) {
     next(err); // Passa o erro para o middleware de tratamento de erros;

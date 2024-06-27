@@ -10,7 +10,7 @@ import { getAllCategoria } from "../models/Categoria/list";
 export const CategoriaRoutes = Router();
 
 CategoriaRoutes.post("/", createCategoriaController);
-CategoriaRoutes.get("/:id", getbyIdCategoria);
+CategoriaRoutes.get("/", getbyIdCategoria);
 CategoriaRoutes.put("/:id", updateCategoriaController);
-CategoriaRoutes.get("/", getAllCategoria);
+CategoriaRoutes.get("/all", getAllCategoria);
 CategoriaRoutes.delete("/:id", deleteCategoria);

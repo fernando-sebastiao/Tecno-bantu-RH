@@ -10,8 +10,8 @@ import { getAllFuncao } from "../models/Funcao/listFuncao";
 const FuncaoRoutes = Router();
 
 FuncaoRoutes.post("/", createFuncaoController);
-FuncaoRoutes.get("/", getAllFuncao);
-FuncaoRoutes.get("/:id", getbyIdFuncaoController);
+FuncaoRoutes.get("/all", getAllFuncao);
+FuncaoRoutes.get("/", getbyIdFuncaoController);
 FuncaoRoutes.delete("/:id", deleteFuncaoController);
 FuncaoRoutes.put("/:id", updateFuncaoController);
 export { FuncaoRoutes };

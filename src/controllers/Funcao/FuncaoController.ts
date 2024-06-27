@@ -4,7 +4,7 @@ import { CustomError } from "../../errors/CustomError";
 import { UpdateFuncao } from "../../models/Funcao/UpdateFuncao";
 import { CreateFuncao } from "../../models/Funcao/createFuncao";
 import { destroyFuncao } from "../../models/Funcao/destroy";
-import { ListarFuncaoById } from "../../models/Funcao/getAllbyId";
+import { FiltrarFuncao, FuncaoProps } from "../../models/Funcao/FiltrarFuncao";
 import { funcaoSchema } from "../../utils/Validations/validateFuncao";
 
 //Usuário criar funcao
@@ -48,19 +48,14 @@ export const getbyIdFuncaoController = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
+    const query = req.query as FuncaoProps;
     //verificar se existe
-    const funcao = await prisma.funcao.findUnique({
-      where: {
-        id: Number(id),
-      },
-    });
-    if (!funcao) {
-      throw new CustomError("Usuário não encontrado", 400, [
-        "O número de identificação fornecido não existe",
+    const dados = await FiltrarFuncao(query);
+    if (dados.length === 0) {
+      throw new CustomError("Banco não encontrado", 400, [
+        "O Banco não foi encontrado",
       ]);
     }
-    const dados = await ListarFuncaoById(Number(id));
     return res.status(200).json(dados);
   } catch (err) {
     next(err); // Passa o erro para o middleware de tratamento de erros;

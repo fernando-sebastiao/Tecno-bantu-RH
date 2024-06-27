@@ -4,7 +4,10 @@ import { CustomError } from "../../errors/CustomError";
 import { UpdateFuncionario } from "../../models/Funcionario/UpdateFuncionario";
 import { CreateFuncionario } from "../../models/Funcionario/createFuncionario";
 import { destroyFuncionario } from "../../models/Funcionario/destroyFuncionario";
-import { ListarFuncionarioById } from "../../models/Funcionario/getallbyId";
+import {
+  FiltrarFuncionario,
+  FuncionarioProps,
+} from "../../models/Funcionario/filtrarFuncionario";
 import { funcionarioSchema } from "../../utils/Validations/validateFuncionario";
 
 export const createFuncionarioController = async (
@@ -218,20 +221,15 @@ export const getbyIdFuncionarioController = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
+    const query = req.query as FuncionarioProps;
     //verificar se existe
-    const funcao = await prisma.funcionario.findUnique({
-      where: {
-        id: Number(id),
-      },
-    });
-    if (!funcao) {
-      throw new CustomError("Funcionário não encontrado", 400, [
-        "Funcionario não encontrado!",
+    const funcionario = await FiltrarFuncionario(query);
+    if (funcionario.length === 0) {
+      throw new CustomError("Funcionário não encontrado!", 400, [
+        "Funcionário não foi encontrado!",
       ]);
     }
-    const carreira = await ListarFuncionarioById(Number(id));
-    return res.status(200).json(carreira);
+    return res.status(200).json(funcionario);
   } catch (err) {
     next(err); // Passa o erro para o middleware de tratamento de erros;
   }

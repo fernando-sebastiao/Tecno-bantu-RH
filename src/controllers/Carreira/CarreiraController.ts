@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
+import { CarreiraProps, FiltrarCarreira } from "../../models/Carreira/Filter";
 import { updateCarreira } from "../../models/Carreira/UpdateCarreira";
 import { CreateCarreira } from "../../models/Carreira/createCarreira";
 import { destroyCarreira } from "../../models/Carreira/destroy";
-import { ListarCarreiraById } from "../../models/Carreira/getallbyId";
 import { CarreiraSchema } from "../../utils/Validations/validateCarreira";
 
 //criar um Carreira
@@ -46,19 +46,15 @@ export const getbyIdCarreiraController = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
+    const query = req.query as CarreiraProps;
     //verificar se existe
-    const funcao = await prisma.carreira.findUnique({
-      where: {
-        id: Number(id),
-      },
-    });
-    if (!funcao) {
-      throw new CustomError("Carreira não encontrado", 400, [
-        "Carreira não encontrada!",
+
+    const carreira = await FiltrarCarreira(query);
+    if (carreira.length === 0) {
+      throw new CustomError("Carreira não encontrada", 400, [
+        "Carreira não foi encontrada!",
       ]);
     }
-    const carreira = await ListarCarreiraById(Number(id));
     return res.status(200).json(carreira);
   } catch (err) {
     next(err); // Passa o erro para o middleware de tratamento de erros;

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { BancoRoutes } from "./routes/BancoRoutes";
+import BancoRoutes from "./routes/BancoRoutes";
 import { CarreiraRoutes } from "./routes/CarreiraRoutes";
 import { CategoriaRoutes } from "./routes/CategoriaRoutes";
 import { DepartamentoRoutes } from "./routes/DepartamentoRoutes";

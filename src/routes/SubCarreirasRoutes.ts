@@ -10,7 +10,7 @@ import { getAllSubCarreiras } from "../models/SubCarreira/list";
 export const SubCarreiraRoutes = Router();
 
 SubCarreiraRoutes.post("/", createSubCarreiraController);
-SubCarreiraRoutes.get("/:id", getbyIdSubCarreiraController);
+SubCarreiraRoutes.get("/", getbyIdSubCarreiraController);
 SubCarreiraRoutes.delete("/:id", deleteSubCarreiraController);
 SubCarreiraRoutes.put("/:id", updateSubCarreiraController);
-SubCarreiraRoutes.get("/", getAllSubCarreiras);
+SubCarreiraRoutes.get("/all", getAllSubCarreiras);

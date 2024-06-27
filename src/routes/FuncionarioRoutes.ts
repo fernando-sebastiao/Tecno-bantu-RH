@@ -12,6 +12,6 @@ export const FuncionarioRoutes = Router();
 
 FuncionarioRoutes.post("/", createFuncionarioController);
 FuncionarioRoutes.put("/:id", updateFuncionarioController);
-FuncionarioRoutes.get("/:id", getbyIdFuncionarioController);
+FuncionarioRoutes.get("/", getbyIdFuncionarioController);
 FuncionarioRoutes.delete("/:id", deleteFuncionario);
-FuncionarioRoutes.get("/", getAllFuncionario);
+FuncionarioRoutes.get("/all", getAllFuncionario);

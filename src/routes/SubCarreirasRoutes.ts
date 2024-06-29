@@ -1,8 +1,8 @@
 import { Router } from "express";
 import {
+  FiltrarSubCarreiraController,
   createSubCarreiraController,
   deleteSubCarreiraController,
-  getbyIdSubCarreiraController,
   updateSubCarreiraController,
 } from "../controllers/Subcarreira/subCarreiraController";
 import { getAllSubCarreiras } from "../models/SubCarreira/list";
@@ -10,7 +10,7 @@ import { getAllSubCarreiras } from "../models/SubCarreira/list";
 export const SubCarreiraRoutes = Router();
 
 SubCarreiraRoutes.post("/", createSubCarreiraController);
-SubCarreiraRoutes.get("/", getbyIdSubCarreiraController);
+SubCarreiraRoutes.get("/", FiltrarSubCarreiraController);
 SubCarreiraRoutes.delete("/:id", deleteSubCarreiraController);
 SubCarreiraRoutes.put("/:id", updateSubCarreiraController);
 SubCarreiraRoutes.get("/all", getAllSubCarreiras);

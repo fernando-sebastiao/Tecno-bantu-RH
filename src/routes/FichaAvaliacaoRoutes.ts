@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  FiltrarFichaAvaliacaoController,
   createFichaAvaliacaoController,
   deleteFichaAvaliacaoController,
   getbyIdFichaAvaliacaoController,
@@ -13,5 +14,6 @@ FichaAvaliacaoRoutes.post("/", createFichaAvaliacaoController);
 FichaAvaliacaoRoutes.get("/:id", getbyIdFichaAvaliacaoController);
 FichaAvaliacaoRoutes.delete("/:id", deleteFichaAvaliacaoController);
 FichaAvaliacaoRoutes.put("/:id", updateFichaAvaliacaoController);
-FichaAvaliacaoRoutes.get("/", getAllFichaAvaliacao);
+FichaAvaliacaoRoutes.get("/all", getAllFichaAvaliacao);
+FichaAvaliacaoRoutes.get("/", FiltrarFichaAvaliacaoController);
 export { FichaAvaliacaoRoutes };

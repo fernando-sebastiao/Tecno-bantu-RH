@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
+import {
+  FichaAvaliacaoProps,
+  FiltrarFichaAvaliacao,
+} from "../../models/FichaAvaliacao/Filtrar";
 import { UpdateFichaAvaliacao } from "../../models/FichaAvaliacao/UpdateFichaAvaliacao";
 import { CreateFichaAvaliacao } from "../../models/FichaAvaliacao/createFichaAvaliacao";
 import { destroyFichaAvaliacao } from "../../models/FichaAvaliacao/destroy";
@@ -39,7 +43,6 @@ export const createFichaAvaliacaoController = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
-    next(err);
   }
 };
 
@@ -66,7 +69,6 @@ export const getbyIdFichaAvaliacaoController = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
-    next(err); // Passa o erro para o middleware de tratamento de erros;
   }
 };
 
@@ -100,7 +102,6 @@ export const deleteFichaAvaliacaoController = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
-    next(err); // Passa o erro para o middleware de tratamento de erros
   }
 };
 
@@ -160,12 +161,31 @@ export const updateFichaAvaliacaoController = async (
 
     return res.json({
       Error: false,
-      message: "Ficha de Avaliação atualizada com sucesso",
+      message: "Ficha de Avaliação atualizada com sucesso!",
       dados,
     });
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
-    next(err);
+  }
+};
+
+export const FiltrarFichaAvaliacaoController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const query = req.query as FichaAvaliacaoProps;
+    const fichaAvaliacao = await FiltrarFichaAvaliacao(query);
+    if (fichaAvaliacao.length === 0) {
+      throw new CustomError("Ficha de Avaliação não encontrada!", 400, [
+        "Ficha de Avalização não encontrada!",
+      ]);
+    }
+    return res.status(200).json(fichaAvaliacao);
+  } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
   }
 };

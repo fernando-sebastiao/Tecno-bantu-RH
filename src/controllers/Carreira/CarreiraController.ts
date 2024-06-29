@@ -40,7 +40,7 @@ export const createCarreiraController = async (
 };
 
 //Usuário Consultar Carreira
-export const getbyIdCarreiraController = async (
+export const FiltrarCarreiraController = async (
   req: Request,
   res: Response,
   next: NextFunction

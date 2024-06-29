@@ -56,7 +56,7 @@ export const createSubCarreiraController = async (
 };
 
 //Usuário Consultar SubCarreira
-export const getbyIdSubCarreiraController = async (
+export const FiltrarSubCarreiraController = async (
   req: Request,
   res: Response,
   next: NextFunction

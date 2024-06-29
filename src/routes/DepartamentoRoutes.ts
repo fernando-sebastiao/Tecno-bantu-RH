@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  FiltrarDepartamentoController,
   createDepartamentoController,
   deleteDepartamentoController,
   updateDepartamentoController,
@@ -11,4 +12,5 @@ export const DepartamentoRoutes = Router();
 DepartamentoRoutes.post("/", createDepartamentoController);
 DepartamentoRoutes.put("/:id", updateDepartamentoController);
 DepartamentoRoutes.delete("/:id", deleteDepartamentoController);
-DepartamentoRoutes.get("/", getAllDepartamento);
+DepartamentoRoutes.get("/all", getAllDepartamento);
+DepartamentoRoutes.get("/", FiltrarDepartamentoController);

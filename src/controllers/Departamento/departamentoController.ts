@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
+import {
+  DepartamentoProps,
+  FiltrarDepartamento,
+} from "../../models/Departamento/FiltrarDepartamento";
 import { UpdateDepartamento } from "../../models/Departamento/UpdateDepartamento";
 import { CreateDepartamento } from "../../models/Departamento/createDepartamento";
 import { destroyDepartamento } from "../../models/Departamento/destroyDepartamento";
@@ -58,7 +62,6 @@ export const createDepartamentoController = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
-    next(err);
   }
 };
 
@@ -123,7 +126,6 @@ export const updateDepartamentoController = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
-    next(err);
   }
 };
 //Deletar departamento
@@ -156,6 +158,24 @@ export const deleteDepartamentoController = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
-    next(err); // Passa o erro para o middleware de tratamento de erros
+  }
+};
+export const FiltrarDepartamentoController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const query = req.query as DepartamentoProps;
+    const categoria = await FiltrarDepartamento(query);
+    if (categoria.length === 0) {
+      throw new CustomError("Departamento não encontrado", 400, [
+        "Departamento não encontrado!!",
+      ]);
+    }
+    return res.status(200).json(categoria);
+  } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
   }
 };

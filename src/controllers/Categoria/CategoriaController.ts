@@ -63,7 +63,7 @@ export const createCategoriaController = async (
 };
 
 //consultar categoria
-export const getbyIdCategoria = async (
+export const FiltrarCategoriaController = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -72,8 +72,8 @@ export const getbyIdCategoria = async (
     const query = req.query as CategoriaProps;
     const categoria = await FiltrarCategoria(query);
     if (categoria.length === 0) {
-      throw new CustomError("Carreira não encontrada", 400, [
-        "Carreira não foi encontrada!",
+      throw new CustomError("Categoria não encontrada", 400, [
+        "Categoria não encontrada!",
       ]);
     }
     return res.status(200).json(categoria);

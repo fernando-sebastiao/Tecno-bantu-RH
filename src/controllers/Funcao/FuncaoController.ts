@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
+import { FiltrarFuncao, FuncaoProps } from "../../models/Funcao/FiltrarFuncao";
 import { UpdateFuncao } from "../../models/Funcao/UpdateFuncao";
 import { CreateFuncao } from "../../models/Funcao/createFuncao";
 import { destroyFuncao } from "../../models/Funcao/destroy";
-import { FiltrarFuncao, FuncaoProps } from "../../models/Funcao/FiltrarFuncao";
 import { funcaoSchema } from "../../utils/Validations/validateFuncao";
 
 //Usuário criar funcao
@@ -42,7 +42,7 @@ export const createFuncaoController = async (
 };
 
 //Usuário Consultar funcao
-export const getbyIdFuncaoController = async (
+export const FiltrarFuncaoController = async (
   req: Request,
   res: Response,
   next: NextFunction

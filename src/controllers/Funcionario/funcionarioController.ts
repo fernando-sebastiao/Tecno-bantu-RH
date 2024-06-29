@@ -215,7 +215,7 @@ export const updateFuncionarioController = async (
   }
 };
 //Consultar Funcionario pelo Id
-export const getbyIdFuncionarioController = async (
+export const FiltrarFuncionarioController = async (
   req: Request,
   res: Response,
   next: NextFunction

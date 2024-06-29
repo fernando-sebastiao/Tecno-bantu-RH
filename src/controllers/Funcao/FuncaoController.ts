@@ -5,6 +5,7 @@ import { FiltrarFuncao, FuncaoProps } from "../../models/Funcao/FiltrarFuncao";
 import { UpdateFuncao } from "../../models/Funcao/UpdateFuncao";
 import { CreateFuncao } from "../../models/Funcao/createFuncao";
 import { destroyFuncao } from "../../models/Funcao/destroy";
+import { getbyIdFuncao } from "../../models/Funcao/getbyId";
 import { funcaoSchema } from "../../utils/Validations/validateFuncao";
 
 //Usuário criar funcao
@@ -149,5 +150,28 @@ export const updateFuncaoController = async (
     res.json(dados);
   } catch (err) {
     next(err);
+  }
+};
+
+export const getbyIdFuncaoController = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    //verificar se existe
+    const verificar = await prisma.funcao.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+    if (!verificar) {
+      throw new CustomError("Função não encontrada!", 400, [
+        "A funcção não foi encontrada!",
+      ]);
+    }
+    //trazendo os dados
+    const dados = await getbyIdFuncao(Number(id));
+    return res.status(200).json(dados);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
   }
 };

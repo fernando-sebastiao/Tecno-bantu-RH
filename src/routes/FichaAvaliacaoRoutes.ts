@@ -14,6 +14,6 @@ FichaAvaliacaoRoutes.post("/", createFichaAvaliacaoController);
 FichaAvaliacaoRoutes.get("/:id", getbyIdFichaAvaliacaoController);
 FichaAvaliacaoRoutes.delete("/:id", deleteFichaAvaliacaoController);
 FichaAvaliacaoRoutes.put("/:id", updateFichaAvaliacaoController);
-FichaAvaliacaoRoutes.get("/all", getAllFichaAvaliacao);
-FichaAvaliacaoRoutes.get("/", FiltrarFichaAvaliacaoController);
+FichaAvaliacaoRoutes.get("/", getAllFichaAvaliacao);
+FichaAvaliacaoRoutes.get("/filter", FiltrarFichaAvaliacaoController);
 export { FichaAvaliacaoRoutes };

@@ -7,6 +7,7 @@ import {
   CategoriaProps,
   FiltrarCategoria,
 } from "../../models/Categoria/filtrar";
+import { getbyIdCategoria } from "../../models/Categoria/getbyId";
 import { updateCategoria } from "../../models/Categoria/updateCategoria";
 import { categoriaSchema } from "../../utils/Validations/validateCategoria";
 
@@ -183,5 +184,31 @@ export const deleteCategoria = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
+  }
+};
+
+export const getbyIdCategoriaController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { id } = req.params;
+    //verificar se existe
+    const verificar = await prisma.categoriaRH.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+    if (!verificar) {
+      throw new CustomError("Carreira não encontrada!", 400, [
+        "A Carreira não foi encontrada!",
+      ]);
+    }
+    //trazendo os dados
+    const dados = await getbyIdCategoria(Number(id));
+    return res.status(200).json(dados);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
   }
 };

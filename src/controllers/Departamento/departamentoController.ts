@@ -8,6 +8,7 @@ import {
 import { UpdateDepartamento } from "../../models/Departamento/UpdateDepartamento";
 import { CreateDepartamento } from "../../models/Departamento/createDepartamento";
 import { destroyDepartamento } from "../../models/Departamento/destroyDepartamento";
+import { getbyIdDepartamento } from "../../models/Departamento/getbyId";
 import { departamentoSchema } from "../../utils/Validations/validateDepartamento";
 
 export const createDepartamentoController = async (
@@ -177,5 +178,31 @@ export const FiltrarDepartamentoController = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
+  }
+};
+
+export const getbyIdDepartamentoController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { id } = req.params;
+    //verificar se existe
+    const verificar = await prisma.departamento.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+    if (!verificar) {
+      throw new CustomError("Departamento não encontrado!", 400, [
+        "O departamento não foi encontrado!",
+      ]);
+    }
+    //trazendo os dados
+    const dados = await getbyIdDepartamento(Number(id));
+    return res.status(200).json(dados);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
   }
 };

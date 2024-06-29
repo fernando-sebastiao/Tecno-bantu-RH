@@ -8,6 +8,7 @@ import {
   FiltrarPublicacao,
   PublicacaoProps,
 } from "../../models/Publicacao/filtrarPublicacao";
+import { getbyIdPublicacao } from "../../models/Publicacao/getbyId";
 import { schemaPublicacao } from "../../utils/Validations/validatePublicacao";
 
 export const createPublicacaoController = async (
@@ -136,5 +137,30 @@ export const FiltrarPublicacaoController = async (
   } catch (err) {
     console.log(err);
     return res.status(400).json({ message: err });
+  }
+};
+export const getbyIdPublicacaoController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { id } = req.params;
+    //verificar se existe
+    const verificar = await prisma.publicacoes.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+    if (!verificar) {
+      throw new CustomError("Banco não encontrado!", 400, [
+        "O Banco não foi encontrado!",
+      ]);
+    }
+    //trazendo os dados
+    const dados = await getbyIdPublicacao(Number(id));
+    return res.status(200).json(dados);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
   }
 };

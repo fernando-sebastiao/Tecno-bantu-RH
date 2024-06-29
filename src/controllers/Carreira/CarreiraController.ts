@@ -5,6 +5,7 @@ import { CarreiraProps, FiltrarCarreira } from "../../models/Carreira/Filter";
 import { updateCarreira } from "../../models/Carreira/UpdateCarreira";
 import { CreateCarreira } from "../../models/Carreira/createCarreira";
 import { destroyCarreira } from "../../models/Carreira/destroy";
+import { getbyIdCarreira } from "../../models/Carreira/getbyId";
 import { CarreiraSchema } from "../../utils/Validations/validateCarreira";
 
 //criar um Carreira
@@ -155,5 +156,31 @@ export const updateCarreiraController = async (
     });
   } catch (err) {
     next(err);
+  }
+};
+
+export const getbyIdCarreiraController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { id } = req.params;
+    //verificar se existe
+    const verificar = await prisma.carreira.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+    if (!verificar) {
+      throw new CustomError("Carreira não encontrada!", 400, [
+        "A Carreira não foi encontrada!",
+      ]);
+    }
+    //trazendo os dados
+    const dados = await getbyIdCarreira(Number(id));
+    return res.status(200).json(dados);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
   }
 };

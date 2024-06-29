@@ -8,6 +8,7 @@ import {
   FiltrarFuncionario,
   FuncionarioProps,
 } from "../../models/Funcionario/filtrarFuncionario";
+import { getbyIdFuncionario } from "../../models/Funcionario/getbyId";
 import { funcionarioSchema } from "../../utils/Validations/validateFuncionario";
 
 export const createFuncionarioController = async (
@@ -265,5 +266,31 @@ export const deleteFuncionario = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
+  }
+};
+//consultar pelo id
+export const getbyIdFuncionarioController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { id } = req.params;
+    //verificar se existe
+    const verificar = await prisma.funcionario.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+    if (!verificar) {
+      throw new CustomError("Funcionário não encontrado!", 400, [
+        "O funcionário não foi encontrado!",
+      ]);
+    }
+    //trazendo os dados
+    const dados = await getbyIdFuncionario(Number(id));
+    return res.status(200).json(dados);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
   }
 };

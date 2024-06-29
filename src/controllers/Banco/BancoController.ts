@@ -5,6 +5,7 @@ import { updateBanco } from "../../models/Banco/UpdateBanco";
 import { CreateBanco } from "../../models/Banco/createBanco";
 import { destroyBanco } from "../../models/Banco/destroy";
 import { FiltrarBanco, propsal } from "../../models/Banco/filter";
+import { getbyIdBanco } from "../../models/Banco/getbyId";
 import { BancoSchema } from "../../utils/Validations/validateBanco";
 
 //Usuário criar funcao
@@ -43,7 +44,7 @@ export const createBanco = async (
 };
 
 //Usuário Consultar banco
-export const getbyIdBanco = async (
+export const FiltrarBancoController = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -133,7 +134,7 @@ export const updateBancoController = async (
   }
 };
 //Usuario Deletar Função
-export const deleteBanco = async (
+export const deleteBancoController = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -144,8 +145,8 @@ export const deleteBanco = async (
     const banco = await prisma.banco.findFirst({ where: { id: Number(id) } });
 
     if (!banco) {
-      throw new CustomError("Usuário não encontrado", 400, [
-        "O número de identificação fornecido não existe",
+      throw new CustomError("Banco não encontrado!", 400, [
+        "O Banco não foi encontrado!",
       ]);
     }
 
@@ -160,5 +161,28 @@ export const deleteBanco = async (
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
+  }
+};
+
+export const getbyIdBancoController = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    //verificar se existe
+    const verificar = await prisma.banco.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+    if (!verificar) {
+      throw new CustomError("Banco não encontrado!", 400, [
+        "O Banco não foi encontrado!",
+      ]);
+    }
+    //trazendo os dados
+    const dados = await getbyIdBanco(Number(id));
+    return res.status(200).json(dados);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
   }
 };

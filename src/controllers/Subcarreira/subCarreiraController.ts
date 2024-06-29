@@ -7,6 +7,7 @@ import {
 } from "../../models/SubCarreira/FiltrarSubcarreira";
 import { CreateSubcarreira } from "../../models/SubCarreira/createSubCarreira";
 import { destroySubCarreira } from "../../models/SubCarreira/destroy";
+import { getbyIdSubcarreira } from "../../models/SubCarreira/getbyId";
 import { updateSubCarreira } from "../../models/SubCarreira/updateSubCategoria";
 import { SubCarreiraSchema } from "../../utils/Validations/validateSubCarreira";
 
@@ -169,5 +170,31 @@ export const updateSubCarreiraController = async (
     });
   } catch (err) {
     next(err);
+  }
+};
+//Consultar pelo id
+export const getbyIdSubcarreiraController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { id } = req.params;
+    //verificar se existe
+    const verificar = await prisma.subCarreira.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+    if (!verificar) {
+      throw new CustomError("Subcarreira não encontrada!", 400, [
+        "Subcarreira não encontrada!",
+      ]);
+    }
+    //trazendo os dados
+    const dados = await getbyIdSubcarreira(Number(id));
+    return res.status(200).json(dados);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
   }
 };

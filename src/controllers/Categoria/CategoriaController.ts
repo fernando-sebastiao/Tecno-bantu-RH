@@ -58,14 +58,14 @@ export const createCategoriaController = async (
       ]);
     }
     const dados = await CreateCategoria(parseCategoria.data);
-    return res.status(201).json({ massage: "Created Categoria", dados });
+    return res.status(201).json({ massage: "Categoria criada!✔", dados });
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
   }
 };
 
-//consultar categoria
+//filtrar categoria
 export const FiltrarCategoriaController = async (
   req: Request,
   res: Response,
@@ -149,7 +149,7 @@ export const updateCategoriaController = async (
 
     return res.json({
       Error: false,
-      message: " atualizado com sucesso",
+      message: "Categoria atualizada com sucesso!✔",
       dados,
     });
   } catch (err) {
@@ -191,6 +191,7 @@ export const deleteCategoria = async (
   }
 };
 
+//consultar categoria
 export const getbyIdCategoriaController = async (
   req: Request,
   res: Response

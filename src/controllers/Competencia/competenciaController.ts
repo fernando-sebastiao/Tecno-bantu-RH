@@ -151,20 +151,20 @@ export const deleteCompetenciaController = async (
 };
 
 //Filtrar Competencia
-export const FiltrarCategoriaController = async (
+export const FiltrarCompetenciaController = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const query = req.query as CompetenciaProps;
-    const categoria = await FiltrarCompetencia(query);
-    if (categoria.length === 0) {
+    const competencia = await FiltrarCompetencia(query);
+    if (competencia.length === 0) {
       throw new CustomError("Competência não encontrada!", 400, [
         "Competência não encontrada!",
       ]);
     }
-    return res.status(200).json(categoria);
+    return res.status(200).json(competencia);
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  FiltrarCompetenciaController,
   createCompetenciaController,
   deleteCompetenciaController,
   getbyIdCompetenciaController,
@@ -14,3 +15,4 @@ CompetenciaRoutes.get("/", getAllCompetencia);
 CompetenciaRoutes.put("/:id", updateCompetenciaController);
 CompetenciaRoutes.get("/:id", getbyIdCompetenciaController);
 CompetenciaRoutes.delete("/:id", deleteCompetenciaController);
+CompetenciaRoutes.get("/filter", FiltrarCompetenciaController);

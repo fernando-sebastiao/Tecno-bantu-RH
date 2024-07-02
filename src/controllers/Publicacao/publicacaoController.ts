@@ -23,14 +23,16 @@ export const createPublicacaoController = async (
       throw new CustomError(
         "Erro de Validação",
         400,
-        parsePublicacao.error.errors.map((error) => error.message)
+        parsePublicacao.error.errors.map(
+          (error) => `${error.path[0]}: ${error.message}`
+        )
       );
     }
 
     // Criando uma nova Publicação
     const dados = await CreatePublicacao(parsePublicacao.data);
 
-    return res.status(201).json({ message: "Post Created!", dados });
+    return res.status(201).json({ message: "Publicação criada!✔", dados });
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
@@ -61,7 +63,7 @@ export const deletePublicacaoController = async (
 
     return res.json({
       Error: false,
-      message: "Publicação Deletada com sucesso",
+      message: "Publicação Deletada com sucesso!✔",
       dados,
     });
   } catch (err) {

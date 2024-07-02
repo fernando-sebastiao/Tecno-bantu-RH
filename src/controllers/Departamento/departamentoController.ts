@@ -65,7 +65,7 @@ export const createDepartamentoController = async (
     return res.status(400).json({ message: err });
   }
 };
-
+//atualizar Departamento
 export const updateDepartamentoController = async (
   req: Request,
   res: Response,

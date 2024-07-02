@@ -7,6 +7,7 @@ import { DepartamentoRoutes } from "./routes/DepartamentoRoutes";
 import { FichaAvaliacaoRoutes } from "./routes/FichaAvaliacaoRoutes";
 import { FuncaoRoutes } from "./routes/FuncaoRoutes";
 import { FuncionarioRoutes } from "./routes/FuncionarioRoutes";
+import { PerguntaFichaAvaliacaoRoutes } from "./routes/PergFichAvaliacao";
 import { PublicacaoRoutes } from "./routes/PublicacaoRoutes";
 import { SubCarreiraRoutes } from "./routes/SubCarreirasRoutes";
 
@@ -22,4 +23,5 @@ routes.use("/ficha-avaliacao", FichaAvaliacaoRoutes);
 routes.use("/departamento", DepartamentoRoutes);
 routes.use("/publicacao", PublicacaoRoutes);
 routes.use("/competencia", CompetenciaRoutes);
+routes.use("/perguntafichavaliacao", PerguntaFichaAvaliacaoRoutes);
 export { routes };

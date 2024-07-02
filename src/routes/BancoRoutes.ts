@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   FiltrarBancoController,
-  createBanco,
+  createBancoController,
   deleteBancoController,
   getbyIdBancoController,
   updateBancoController,
@@ -10,7 +10,7 @@ import { errorHandler } from "../middleware/errorHandler";
 import { getAllBanco } from "../models/Banco/listBanco";
 const BancoRoutes = Router();
 
-BancoRoutes.post("/", createBanco);
+BancoRoutes.post("/", createBancoController);
 BancoRoutes.get("/", getAllBanco);
 BancoRoutes.get("/filter", FiltrarBancoController);
 BancoRoutes.put("/:id", updateBancoController);

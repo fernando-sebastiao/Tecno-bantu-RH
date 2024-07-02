@@ -9,7 +9,7 @@ import { getbyIdBanco } from "../../models/Banco/getbyId";
 import { BancoSchema } from "../../utils/Validations/validateBanco";
 
 //Usuário criar funcao
-export const createBanco = async (
+export const createBancoController = async (
   req: Request,
   res: Response,
   next: NextFunction

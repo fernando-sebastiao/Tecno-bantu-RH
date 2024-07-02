@@ -2,6 +2,7 @@ import { Router } from "express";
 import BancoRoutes from "./routes/BancoRoutes";
 import { CarreiraRoutes } from "./routes/CarreiraRoutes";
 import { CategoriaRoutes } from "./routes/CategoriaRoutes";
+import { CompetenciaRoutes } from "./routes/CompetenciaRoutes";
 import { DepartamentoRoutes } from "./routes/DepartamentoRoutes";
 import { FichaAvaliacaoRoutes } from "./routes/FichaAvaliacaoRoutes";
 import { FuncaoRoutes } from "./routes/FuncaoRoutes";
@@ -20,5 +21,5 @@ routes.use("/funcionario", FuncionarioRoutes);
 routes.use("/ficha-avaliacao", FichaAvaliacaoRoutes);
 routes.use("/departamento", DepartamentoRoutes);
 routes.use("/publicacao", PublicacaoRoutes);
+routes.use("/competencia", CompetenciaRoutes);
 export { routes };
-//todas as rotas

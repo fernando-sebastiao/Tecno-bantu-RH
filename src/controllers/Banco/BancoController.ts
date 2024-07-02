@@ -21,7 +21,9 @@ export const createBanco = async (
       throw new CustomError(
         "Erro de Validação",
         400,
-        parseBanco.error.errors.map((error) => error.message)
+        parseBanco.error.errors.map(
+          (error) => `${error.path[0]}: ${error.message}`
+        )
       );
     }
     //verificar se o Banco já existe
@@ -110,7 +112,9 @@ export const updateBancoController = async (
         throw new CustomError(
           "Erro de Validação",
           400,
-          verificarDado.error.errors.map((error) => error.message)
+          verificarDado.error.errors.map(
+            (error) => `${error.path[0]}: ${error.message}`
+          )
         );
       }
     }

@@ -21,7 +21,9 @@ export const createFuncaoController = async (
       throw new CustomError(
         "Erro de Validação",
         400,
-        parseFuncao.error.errors.map((error) => error.message)
+        parseFuncao.error.errors.map(
+          (error) => `${error.path[0]}: ${error.message}`
+        )
       );
     }
     //verificar se a funcao já existe

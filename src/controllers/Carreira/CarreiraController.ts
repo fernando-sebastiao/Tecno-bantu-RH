@@ -21,7 +21,9 @@ export const createCarreiraController = async (
       throw new CustomError(
         "Erro de Validação",
         400,
-        parseCarreira.error.errors.map((error) => error.message)
+        parseCarreira.error.errors.map(
+          (error) => `${error.path[0]}: ${error.message}`
+        )
       );
     }
     //verificar se a carreira já existe
@@ -137,7 +139,9 @@ export const updateCarreiraController = async (
         throw new CustomError(
           "Erro de Validação",
           400,
-          verificarDado.error.errors.map((error) => error.message)
+          verificarDado.error.errors.map(
+            (error) => `${error.path[0]}: ${error.message}`
+          )
         );
       }
     }

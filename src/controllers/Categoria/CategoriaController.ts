@@ -23,7 +23,9 @@ export const createCategoriaController = async (
       throw new CustomError(
         "Erro de Validação",
         400,
-        parseCategoria.error.errors.map((error) => error.message)
+        parseCategoria.error.errors.map(
+          (error) => `${error.path[0]}: ${error.message}`
+        )
       );
     }
     //verificar se a categoria já existe
@@ -129,7 +131,9 @@ export const updateCategoriaController = async (
         throw new CustomError(
           "Erro de Validação",
           400,
-          verificarDado.error.errors.map((error) => error.message)
+          verificarDado.error.errors.map(
+            (error) => `${error.path[0]}: ${error.message}`
+          )
         );
       }
     }

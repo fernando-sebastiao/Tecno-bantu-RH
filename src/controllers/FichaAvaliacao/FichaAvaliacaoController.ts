@@ -23,7 +23,9 @@ export const createFichaAvaliacaoController = async (
       throw new CustomError(
         "Erro de Validação",
         400,
-        parseFichaAvaliacao.error.errors.map((error) => error.message)
+        parseFichaAvaliacao.error.errors.map(
+          (error) => `${error.path[0]}: ${error.message}`
+        )
       );
     }
     //verificar se o nome da Ficha Avaliação já existe
@@ -39,7 +41,7 @@ export const createFichaAvaliacaoController = async (
     const dados = await CreateFichaAvaliacao(parseFichaAvaliacao.data);
     return res
       .status(201)
-      .json({ massage: "Ficha de Avaliação Criada!!", dados });
+      .json({ massage: "Ficha de Avaliação Criada!", dados });
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
@@ -147,7 +149,9 @@ export const updateFichaAvaliacaoController = async (
         throw new CustomError(
           "Erro de Validação",
           400,
-          verificarDado.error.errors.map((error) => error.message)
+          verificarDado.error.errors.map(
+            (error) => `${error.path[0]}: ${error.message}`
+          )
         );
       }
     }

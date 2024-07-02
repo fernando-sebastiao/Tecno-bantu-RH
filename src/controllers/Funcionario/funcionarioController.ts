@@ -23,7 +23,9 @@ export const createFuncionarioController = async (
       throw new CustomError(
         "Erro de Validação",
         400,
-        parseFuncionario.error.errors.map((error) => error.message)
+        parseFuncionario.error.errors.map(
+          (error) => `${error.path[0]}: ${error.message}`
+        )
       );
     }
     //verificar se o funcionario já existe
@@ -173,7 +175,9 @@ export const updateFuncionarioController = async (
         throw new CustomError(
           "Erro de Validação",
           400,
-          verificarDado.error.errors.map((error) => error.message)
+          verificarDado.error.errors.map(
+            (error) => `${error.path[0]}: ${error.message}`
+          )
         );
       }
     }

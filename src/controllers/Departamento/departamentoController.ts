@@ -106,7 +106,9 @@ export const updateDepartamentoController = async (
         throw new CustomError(
           "Erro de Validação",
           400,
-          verificarDado.error.errors.map((error) => error.message)
+          verificarDado.error.errors.map(
+            (error) => `${error.path[0]}: ${error.message}`
+          )
         );
       }
     }
@@ -171,7 +173,7 @@ export const FiltrarDepartamentoController = async (
     const categoria = await FiltrarDepartamento(query);
     if (categoria.length === 0) {
       throw new CustomError("Departamento não encontrado", 400, [
-        "Departamento não encontrado!!",
+        "Departamento não encontrado!",
       ]);
     }
     return res.status(200).json(categoria);

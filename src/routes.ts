@@ -7,7 +7,7 @@ import { DepartamentoRoutes } from "./routes/DepartamentoRoutes";
 import { FichaAvaliacaoRoutes } from "./routes/FichaAvaliacaoRoutes";
 import { FuncaoRoutes } from "./routes/FuncaoRoutes";
 import { FuncionarioRoutes } from "./routes/FuncionarioRoutes";
-import { PerguntaFichaAvaliacaoRoutes } from "./routes/PergFichAvaliacao";
+import { PerguntaFichaAvaliacaoRoutes } from "./routes/PergFichAvaliacaoRoutes";
 import { PublicacaoRoutes } from "./routes/PublicacaoRoutes";
 import { SubCarreiraRoutes } from "./routes/SubCarreirasRoutes";
 

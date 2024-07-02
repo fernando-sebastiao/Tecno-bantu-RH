@@ -1,4 +1,4 @@
-//Usuário listar Categoria
+//Usuário listar Publicacao
 
 import { Request, Response } from "express";
 import { prisma } from "../../database/db";

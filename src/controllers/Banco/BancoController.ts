@@ -45,7 +45,7 @@ export const createBancoController = async (
   }
 };
 
-//Usuário Consultar banco
+//Usuário Filtrar banco
 export const FiltrarBancoController = async (
   req: Request,
   res: Response,
@@ -137,7 +137,7 @@ export const updateBancoController = async (
     return res.status(400).json({ message: err });
   }
 };
-//Usuario Deletar Função
+//Usuario Deletar Banco
 export const deleteBancoController = async (
   req: Request,
   res: Response,
@@ -159,7 +159,7 @@ export const deleteBancoController = async (
 
     return res.json({
       Error: false,
-      message: "Banco Deletado com sucesso",
+      message: "Banco Deletado com sucesso!✔",
       dados,
     });
   } catch (err) {
@@ -168,6 +168,7 @@ export const deleteBancoController = async (
   }
 };
 
+//Usuário consultar Banco
 export const getbyIdBancoController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

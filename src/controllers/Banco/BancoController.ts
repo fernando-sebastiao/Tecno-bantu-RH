@@ -87,9 +87,7 @@ export const updateBancoController = async (
     });
 
     if (!verificar) {
-      throw new CustomError("Bank Not Found", 400, [
-        "O número de identificação fornecido não existe",
-      ]);
+      throw new CustomError("Bank Not Found", 400, ["Banco não encontrado"]);
     }
 
     // Validar os dados
@@ -129,7 +127,7 @@ export const updateBancoController = async (
 
     return res.json({
       Error: false,
-      message: "Banco atualizado com sucesso",
+      message: "Banco atualizado com sucesso!✔",
       dados,
     });
   } catch (err) {

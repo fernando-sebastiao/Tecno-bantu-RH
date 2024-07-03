@@ -182,7 +182,7 @@ export const deleteCategoria = async (
 
     return res.json({
       Error: false,
-      message: "Categoria Deletada com sucesso",
+      message: "Categoria Deletada com sucesso ✔",
       dados,
     });
   } catch (err) {

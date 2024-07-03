@@ -155,7 +155,7 @@ export const updateCarreiraController = async (
 
     return res.json({
       Error: false,
-      message: "Carreira atualizada com sucesso",
+      message: "Carreira atualizada com sucesso!✔",
       dados,
     });
   } catch (err) {
@@ -177,7 +177,7 @@ export const getbyIdCarreiraController = async (
     });
     if (!verificar) {
       throw new CustomError("Carreira não encontrada!", 400, [
-        "A Carreira não foi encontrada!",
+        "A carreira não foi encontrada!",
       ]);
     }
     //trazendo os dados

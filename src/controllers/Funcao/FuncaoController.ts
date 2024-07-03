@@ -38,13 +38,15 @@ export const createFuncaoController = async (
     //criando uma nova Funcao
     const dados = await CreateFuncao(parseFuncao.data);
 
-    return res.status(201).json({ massage: "Created Function", dados });
+    return res
+      .status(201)
+      .json({ massage: "Função criada com sucesso!✔", dados });
   } catch (err) {
     next(err); // Passa o erro para o middleware de tratamento de erros
   }
 };
 
-//Usuário Consultar funcao
+//Usuário Filtrar Função
 export const FiltrarFuncaoController = async (
   req: Request,
   res: Response,
@@ -76,8 +78,8 @@ export const deleteFuncaoController = async (
     const funcao = await prisma.funcao.findFirst({ where: { id: Number(id) } });
 
     if (!funcao) {
-      throw new CustomError("Usuário não encontrado", 400, [
-        "O número de identificação fornecido não existe",
+      throw new CustomError("Função não encontrada!", 400, [
+        "Função não encontrada!❌",
       ]);
     }
 
@@ -114,7 +116,7 @@ export const updateFuncaoController = async (
 
     if (!verificar) {
       throw new CustomError("Função não encontrada", 400, [
-        "O número de identificação fornecido não existe",
+        "Função não encontrada!",
       ]);
     }
 
@@ -154,7 +156,7 @@ export const updateFuncaoController = async (
     next(err);
   }
 };
-
+//Consultar pelo Id
 export const getbyIdFuncaoController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -166,7 +168,7 @@ export const getbyIdFuncaoController = async (req: Request, res: Response) => {
     });
     if (!verificar) {
       throw new CustomError("Função não encontrada!", 400, [
-        "A funcção não foi encontrada!",
+        "A função não foi encontrada!",
       ]);
     }
     //trazendo os dados

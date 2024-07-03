@@ -34,14 +34,14 @@ export const createFichaAvaliacaoController = async (
     });
     if (verificar) {
       throw new CustomError("Esta Ficha de Avaliação já existe", 400, [
-        "Este Ficha de Avaliação já existe",
+        "Esta Ficha de Avaliação já existe!❌",
       ]);
     }
     //criando a Ficha Avaliação
     const dados = await CreateFichaAvaliacao(parseFichaAvaliacao.data);
     return res
       .status(201)
-      .json({ massage: "Ficha de Avaliação Criada!", dados });
+      .json({ massage: "Ficha de Avaliação criada!✔", dados });
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
@@ -98,7 +98,7 @@ export const deleteFichaAvaliacaoController = async (
 
     return res.json({
       Error: false,
-      message: "Ficha de Avaliação Deletada com sucesso",
+      message: "Ficha de Avaliação deletada com sucesso!✔",
       dados,
     });
   } catch (err) {
@@ -165,7 +165,7 @@ export const updateFichaAvaliacaoController = async (
 
     return res.json({
       Error: false,
-      message: "Ficha de Avaliação atualizada com sucesso!",
+      message: "Ficha de Avaliação atualizada com sucesso!✔",
       dados,
     });
   } catch (err) {

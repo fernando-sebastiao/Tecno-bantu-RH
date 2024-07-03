@@ -33,8 +33,8 @@ export const createFuncionarioController = async (
       where: { nome_completo: parseFuncionario.data.nome_completo },
     });
     if (verificar) {
-      throw new CustomError("This Funcionario already exists", 400, [
-        "Este Funcionario já existe",
+      throw new CustomError("Este funcionário ja existe!", 400, [
+        "Este Funcionario já existe!👾",
       ]);
     }
     //verificar se o email já existe
@@ -45,7 +45,7 @@ export const createFuncionarioController = async (
     });
     if (verficarEmail) {
       throw new CustomError("This Email already exists", 400, [
-        "Este Email já existe",
+        "Este Email já existe!👾",
       ]);
     }
     //verificar número de telefone1
@@ -56,7 +56,7 @@ export const createFuncionarioController = async (
     });
     if (verficarTelefone1) {
       throw new CustomError("This number already exists", 400, [
-        "Este Número de telefone já pertence a outro Funcionário!",
+        "Este Número de telefone já pertence a outro funcionário!",
       ]);
     }
     //verificar número de telefone2
@@ -67,7 +67,7 @@ export const createFuncionarioController = async (
     });
     if (verficarTelefone2) {
       throw new CustomError("This number already exists", 400, [
-        "Este Número de telefone já pertence a outro Funcionário!",
+        "Este Número de telefone já pertence a outro funcionário!",
       ]);
     }
     //verificar o número de conta
@@ -78,7 +78,7 @@ export const createFuncionarioController = async (
     });
     if (verficarNum_Conta) {
       throw new CustomError("This count number already exists", 400, [
-        "Este Número de Conta já pertence a outro Funcionário!",
+        "Este Número de Conta já pertence a outro funcionário!",
       ]);
     }
     //verificar o Iban
@@ -89,7 +89,7 @@ export const createFuncionarioController = async (
     });
     if (verficarIban) {
       throw new CustomError("This iban number already exists", 400, [
-        "Este Iban já pertence a outro Funcionário!",
+        "Este IBAN já pertence a outro funcionário!",
       ]);
     }
     //verificar se a função existe
@@ -100,7 +100,7 @@ export const createFuncionarioController = async (
     });
     if (!verificarFuncao) {
       throw new CustomError("Esta Função não existe!", 400, [
-        "Esta Função não existe",
+        "Esta função não existe!👾",
       ]);
     }
     //verificar se o banco existe
@@ -122,11 +122,13 @@ export const createFuncionarioController = async (
     });
     if (!verificarCategoria) {
       throw new CustomError("Esta Categria não existe!", 400, [
-        "Esta Categoria não existe!",
+        "Esta categoria não existe!",
       ]);
     }
     const dados = await CreateFuncionario(parseFuncionario.data);
-    return res.status(201).json({ massage: "Created Funcionario!", dados });
+    return res
+      .status(201)
+      .json({ massage: "Funcionário criado com sucesso!✔", dados });
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });
@@ -151,7 +153,7 @@ export const updateFuncionarioController = async (
 
     if (!verificar) {
       throw new CustomError("Funcionario não encontrado!", 400, [
-        "O número de identificação fornecido não existe",
+        "Funcionario não encontrado!",
       ]);
     }
 
@@ -211,7 +213,7 @@ export const updateFuncionarioController = async (
 
     return res.json({
       Error: false,
-      message: "Funcionário atualizado com sucesso",
+      message: "Dados de funcionário atualizado com sucesso!✔",
       dados,
     });
   } catch (err) {
@@ -231,7 +233,7 @@ export const FiltrarFuncionarioController = async (
     const funcionario = await FiltrarFuncionario(query);
     if (funcionario.length === 0) {
       throw new CustomError("Funcionário não encontrado!", 400, [
-        "Funcionário não foi encontrado!",
+        "Funcionário não encontrado!",
       ]);
     }
     return res.status(200).json(funcionario);
@@ -264,7 +266,7 @@ export const deleteFuncionario = async (
 
     return res.json({
       Error: false,
-      message: "Funcionário Deletado com sucesso",
+      message: "Funcionário deletado com sucesso!✔",
       dados,
     });
   } catch (err) {

@@ -172,9 +172,7 @@ export const FiltrarDepartamentoController = async (
     const query = req.query as DepartamentoProps;
     const categoria = await FiltrarDepartamento(query);
     if (categoria.length === 0) {
-      throw new CustomError("Departamento não encontrado", 400, [
-        "Departamento não encontrado!",
-      ]);
+      throw new CustomError("Without results", 400, ["Sem resultados!"]);
     }
     return res.status(200).json(categoria);
   } catch (err) {

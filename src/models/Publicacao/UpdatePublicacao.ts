@@ -13,7 +13,7 @@ export const UpdatePublicacao = async ({
     where: { id },
     data: {
       titulo,
-      ano,
+      ano: new Date(ano),
       tipo,
       entidade,
     },

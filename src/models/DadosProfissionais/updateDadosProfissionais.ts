@@ -14,8 +14,8 @@ export const updateDadosProfissionais = async ({
     where: { id },
     data: {
       contrato,
-      data_admissao,
-      data_despacho,
+      data_admissao: new Date(data_admissao),
+      data_despacho: new Date(data_despacho),
       Id_funcionario,
       numero_despacho,
     },

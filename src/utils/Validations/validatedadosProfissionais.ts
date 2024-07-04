@@ -12,5 +12,6 @@ export const schemaDadosProfissionais = z.object({
   Id_funcionario: z
     .number()
     .int()
-    .positive({ message: "O número deve ser positivo!" }),
+    .positive({ message: "O número deve ser positivo!" })
+    .optional(),
 });

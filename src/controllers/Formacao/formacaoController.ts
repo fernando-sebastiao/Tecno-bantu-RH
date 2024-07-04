@@ -3,6 +3,10 @@ import { prisma } from "../../database/db";
 import { CustomError } from "../../errors/CustomError";
 import { CreateFormacao } from "../../models/Formacao/createFormacao";
 import { destroyFormacao } from "../../models/Formacao/destroy";
+import {
+  FiltrarFormacao,
+  FormacaoDTOProps,
+} from "../../models/Formacao/filtrar";
 import { ListarFormacaoById } from "../../models/Formacao/getbyId";
 import { UpdateFormacao } from "../../models/Formacao/updateFormacao";
 import { schemaFormacoes } from "../../utils/Validations/validateFormacoes";
@@ -160,6 +164,25 @@ export const getbyIdFormacaoController = async (
     }
     const dados = await ListarFormacaoById(Number(id));
     return res.status(200).json(dados);
+  } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: err });
+  }
+};
+
+//Filtrar Formação
+export const FiltrarFormacaoController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const query = req.query as FormacaoDTOProps;
+    const Formacao = await FiltrarFormacao(query);
+    if (Formacao.length === 0) {
+      throw new CustomError("Sem resultados!", 400, ["Sem resultados!"]);
+    }
+    return res.status(200).json(Formacao);
   } catch (err) {
     console.error(err);
     return res.status(400).json({ message: err });

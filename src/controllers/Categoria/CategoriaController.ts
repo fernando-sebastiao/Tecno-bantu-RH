@@ -86,7 +86,7 @@ export const FiltrarCategoriaController = async (
   }
 };
 
-//Actualizar o Banco
+//Actualizar a categoria
 
 export const updateCategoriaController = async (
   req: Request,

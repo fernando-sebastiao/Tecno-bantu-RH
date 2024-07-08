@@ -27,7 +27,7 @@ export const UpdateFuncionario = async ({
   telefone2,
   whatsApp,
 }: FuncionarioDTO) => {
-  //criando categoria
+  //atualizando funcionario
   const dados = await prisma.funcionario.update({
     where: {
       id,
@@ -39,7 +39,7 @@ export const UpdateFuncionario = async ({
       email,
       genero,
       Id_banco,
-      nascimento,
+      nascimento: new Date(nascimento),
       iban,
       id_funcao,
       nivel_academico,

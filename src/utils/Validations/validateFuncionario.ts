@@ -77,13 +77,7 @@ export const funcionarioSchema = z.object({
     .positive({ message: "O número precisa ser posito!" }),
   num_conta: z.string().optional(),
   iban: z.string().transform((iban) => {
-    return iban
-      .trim()
-      .split("")
-      .map((valor) => {
-        return valor.concat("AOA");
-      })
-      .join("");
+    return "AOA" + iban.trim();
   }),
   Id_banco: number({ message: "Este campo precisa receber um número!" })
     .int({ message: "O número deve ser inteiro!" })

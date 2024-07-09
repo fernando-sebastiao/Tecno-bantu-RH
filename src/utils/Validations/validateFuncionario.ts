@@ -12,7 +12,8 @@ export const funcionarioSchema = z.object({
         })
         .join(" ");
     }),
-  nome_mae: string()
+  nome_mae: z
+    .string()
     .min(8, {
       message: "O nome precisa ter no minímo 8 caracteres!",
     })
@@ -25,7 +26,8 @@ export const funcionarioSchema = z.object({
         })
         .join(" ");
     }),
-  nome_pai: string()
+  nome_pai: z
+    .string()
     .min(8, {
       message: "O nome precisa ter no minímo 8 caracteres!",
     })
@@ -41,7 +43,8 @@ export const funcionarioSchema = z.object({
   nascimento: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "Ano deve ser uma data válida",
   }),
-  email: string()
+  email: z
+    .string()
     .nonempty("O e-mail é obrigatório!")
     .email("Formato de e-mail inválido"),
   genero: z.enum(["masculino", "feminino"]),
@@ -55,11 +58,12 @@ export const funcionarioSchema = z.object({
     "Mestrado",
     "Doctoramento",
   ]),
-  avatar: string().optional(),
+  avatar: z.string().optional(),
   telefone1: string().min(9, {
     message: "O número de telefone precisa ter no minímo 9 caracteres!",
   }),
-  telefone2: string()
+  telefone2: z
+    .string()
     .min(9, {
       message: "O número de telefone precisa ter no minímo 9 caracteres!",
     })
@@ -69,7 +73,8 @@ export const funcionarioSchema = z.object({
   instagram: z.string().optional(),
   bairro: z.string(),
   rua: string(),
-  id_funcao: number({ message: "Este campo precisa receber um número!" })
+  id_funcao: z
+    .number({ message: "Este campo precisa receber um número!" })
     .int({ message: "O número deve ser inteiro!" })
     .positive({ message: "O número precisa ser posito!" }),
   id_categoria: number({ message: "Este campo precisa receber um número!" })
@@ -79,7 +84,8 @@ export const funcionarioSchema = z.object({
   iban: z.string().transform((iban) => {
     return "AOA" + iban.trim();
   }),
-  Id_banco: number({ message: "Este campo precisa receber um número!" })
+  Id_banco: z
+    .number({ message: "Este campo precisa receber um número!" })
     .int({ message: "O número deve ser inteiro!" })
     .positive({ message: "O número precisa ser posito!" }),
 });

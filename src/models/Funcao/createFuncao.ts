@@ -7,4 +7,5 @@ export const CreateFuncao = async ({ nome_funcao }: FuncaoDTO) => {
     data: { nome_funcao },
   });
   return dados;
+  console.log(dados)
 };

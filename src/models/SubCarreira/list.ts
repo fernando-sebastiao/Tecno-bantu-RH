@@ -9,6 +9,11 @@ export const getAllSubCarreiras = async (req: Request, res: Response) => {
     orderBy: {
       id: "asc",
     },
+    select: {
+      id: true,
+      nome_SubCarreira: true,
+      Carreira: true,
+    },
   });
 
   return res.status(200).json(data);

@@ -5,6 +5,11 @@ export const getbyIdCategoria = async (id: number) => {
     where: {
       id,
     },
+    select: {
+      id: true,
+      nome_categoria: true,
+      SubCarreira: true,
+    },
   });
   return dados;
 };

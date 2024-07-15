@@ -9,6 +9,13 @@ export const getAllCategoria = async (req: Request, res: Response) => {
     orderBy: {
       id: "asc",
     },
+    select: {
+      id: true,
+      nome_categoria: true,
+      salario_base: true,
+      SubCarreira: true,
+      Carreira: true,
+    },
   });
 
   return res.status(200).json(data);

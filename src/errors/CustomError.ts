@@ -16,6 +16,7 @@ export class CustomError extends Error {
   }
 
   serializeErrors() {
-    return this.errors.length > 0 ? this.errors : [{ message: this.message }];
+    // Retorna sempre o array de erros, mesmo que esteja vazio
+    return this.errors;
   }
 }

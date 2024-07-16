@@ -5,6 +5,17 @@ export const getbyIdSubcarreira = async (id: number) => {
     where: {
       id,
     },
+    select: {
+      id: true,
+      nome_SubCarreira: true,
+      Carreira: {
+        select: {
+          id: true,
+          nome_carreira: true,
+          regime: true,
+        },
+      },
+    },
   });
   return dados;
 };

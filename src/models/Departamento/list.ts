@@ -10,8 +10,29 @@ export const getAllDepartamento = async (req: Request, res: Response) => {
       id: "asc",
     },
     select: {
-      funcionario_chefe: true,
-      funcionario_supervisor: true,
+      id: true,
+      nome_departamento: true,
+      avaliacao: true,
+      funcionario_chefe: {
+        select: {
+          id: true,
+          nome_completo: true,
+          avatar: true,
+        },
+      },
+      funcionario_supervisor: {
+        select: {
+          id: true,
+          nome_completo: true,
+          avatar: true,
+          bairro: true,
+        },
+      },
+      funcionariodepartamento: {
+        select: {
+          id: true,
+        },
+      },
     },
   });
 

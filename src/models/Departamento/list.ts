@@ -30,7 +30,6 @@ export const getAllDepartamento = async (req: Request, res: Response) => {
           id: true,
           nome_completo: true,
           avatar: true,
-          bairro: true,
           createdAt: true,
           Funcao: {
             select: {

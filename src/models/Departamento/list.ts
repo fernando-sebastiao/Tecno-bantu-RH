@@ -12,12 +12,16 @@ export const getAllDepartamento = async (req: Request, res: Response) => {
     select: {
       id: true,
       nome_departamento: true,
-      avaliacao: true,
       funcionario_chefe: {
         select: {
           id: true,
           nome_completo: true,
           avatar: true,
+          Funcao: {
+            select: {
+              nome_funcao: true,
+            },
+          },
         },
       },
       funcionario_supervisor: {
@@ -26,6 +30,11 @@ export const getAllDepartamento = async (req: Request, res: Response) => {
           nome_completo: true,
           avatar: true,
           bairro: true,
+          Funcao: {
+            select: {
+              nome_funcao: true,
+            },
+          },
         },
       },
       _count: {

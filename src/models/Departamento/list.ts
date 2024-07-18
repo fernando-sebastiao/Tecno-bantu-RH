@@ -28,9 +28,9 @@ export const getAllDepartamento = async (req: Request, res: Response) => {
           bairro: true,
         },
       },
-      funcionariodepartamento: {
+      _count: {
         select: {
-          id: true,
+          funcionariodepartamento: true,
         },
       },
     },

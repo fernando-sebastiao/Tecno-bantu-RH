@@ -17,6 +17,7 @@ export const getAllDepartamento = async (req: Request, res: Response) => {
           id: true,
           nome_completo: true,
           avatar: true,
+          createdAt: true,
           Funcao: {
             select: {
               nome_funcao: true,
@@ -30,6 +31,7 @@ export const getAllDepartamento = async (req: Request, res: Response) => {
           nome_completo: true,
           avatar: true,
           bairro: true,
+          createdAt: true,
           Funcao: {
             select: {
               nome_funcao: true,
@@ -42,6 +44,7 @@ export const getAllDepartamento = async (req: Request, res: Response) => {
           funcionariodepartamento: true,
         },
       },
+      createdAt: true,
     },
   });
 

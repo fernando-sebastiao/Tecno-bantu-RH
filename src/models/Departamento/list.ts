@@ -9,6 +9,10 @@ export const getAllDepartamento = async (req: Request, res: Response) => {
     orderBy: {
       id: "asc",
     },
+    select: {
+      funcionario_chefe: true,
+      funcionario_supervisor: true,
+    },
   });
 
   return res.status(200).json(data);

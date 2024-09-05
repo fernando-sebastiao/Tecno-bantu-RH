@@ -9,6 +9,14 @@ export const getAllFuncionario = async (req: Request, res: Response) => {
     orderBy: {
       id: "asc",
     },
+    include:{
+        Funcao:{
+            select:{
+                id:true,
+                nome_funcao:true,
+            }
+        }
+    }
   });
 
   return res.status(200).json(data);

@@ -26,6 +26,7 @@ export const createCarreiraController = async (
         )
       );
     }
+    
     //verificar se a carreira já existe
     const verificar = await prisma.carreira.findFirst({
       where: { nome_carreira: parseCarreira.data.nome_carreira },

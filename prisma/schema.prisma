@@ -18,7 +18,7 @@ model Carreira {
   nome_carreira String        @unique @map("nome")
   regime        Regime
   subcarreira   SubCarreira[]
-  cateroria     CategoriaRH[]
+  categoria     CategoriaRH[]
   createdAt     DateTime      @default(now()) @map("created_at")
   updatedAt     DateTime      @updatedAt @map("updated_at")
 

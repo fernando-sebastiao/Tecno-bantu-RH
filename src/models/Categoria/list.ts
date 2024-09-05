@@ -15,6 +15,7 @@ export const getAllCategoria = async (req: Request, res: Response) => {
       salario_base: true,
       SubCarreira: true,
       Carreira: true,
+      createdAt: true,
     },
   });
 

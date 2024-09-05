@@ -8,6 +8,9 @@ export const getAllCarreira = async (req: Request, res: Response) => {
     orderBy: {
       id: "asc",
     },
+    include:{
+        categoria: true
+    }
   });
 
   return res.status(200).json(data);
